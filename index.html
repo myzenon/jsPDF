@@ -1,0 +1,85 @@
+<!doctype html>
+ <html lang='en'>
+ <head>
+    <meta charset='utf-8'>
+    <title>Google Fonts with regular pdfmake</title>
+    <script src='pdfmake-browserified.min.js'></script>
+    <script src='thsarabun.js'></script>
+    <script src='thsarabun.map.js'></script>
+    <style>
+        @font-face {
+            font-family: 'THSarabun';
+            src: url('THSarabun.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'THSarabun';
+            src: url('THSarabun Bold.ttf');
+            font-weight: bold;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'THSarabun';
+            src: url('THSarabun Italic.ttf');
+            font-weight: normal;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'THSarabun';
+            src: url('THSarabun Bold Italic.ttf');
+            font-weight: bold;
+            font-style: italic;
+        }
+    </style>
+ </head>
+ <body>
+    <input type="button" onclick="openPdf()" value="Open PDF"></input>
+     <script>
+        function getTextWidth(text, font) {
+            // re-use canvas object for better performance
+            var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+            var context = canvas.getContext("2d");
+            context.font = font;
+            var metrics = context.measureText(text);
+            return metrics.width;
+        }
+        function openPdf() {
+            var docDefinition = {
+                content: [ 
+                    {
+                        style: 'section',
+                        table: {
+                            widths: [ '50%',  '*',  '40%'],
+                            body: [
+                                [ 
+                                    {
+                                        text: 'first column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF',
+                                    },
+                                    {
+                                        text: 'second column',
+                                        color: '#555555',
+                                        fillColor: '#dedede'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555'
+                                    }
+                                ]
+                            ]
+                        },
+                        layout: 'noBorders'
+                    }
+                ],
+                defaultStyle: {
+                    font: 'THSarabun',
+                    fontSize : 20
+                }
+            };
+            createPdf(docDefinition, thsarabun.map, thsarabun.vfs).open();
+        }
+     </script>
+ </body>
+</html>
