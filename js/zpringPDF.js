@@ -6,7 +6,7 @@ var docDefinition = {
                 body: [
                     [ 
                         {
-                            text: zpringData.header.address,
+                            text: zpringData.header.nameshop,
                             fillColor: '#555555',
                             color: '#00FFFF',
                         },
