@@ -36,9 +36,69 @@ var zpringData = new function() {
    };
 
    this.body = {
-       
-   }
+       order: {
+           orderlist: [
+               {
+                   no:'',
+                   detail: {
+                       name:'',
+                       description:''
+                   },
+                   quantity: {
+                       amount:'',
+                       unit:''
+                   },
+                   pricePerUnit:''
+               }
+           ]
+       },
+       total: {
+           letter:'',
+           digit: {
+               noTax: {
+                    total:'',
+                    discount:'',
+                    afterDiscount:'',
+                    finalTotal:'',
+               },
+               withTax: {
+                   deductTax:'',
+                   finalTotal:''
+               }
+           }
+       },
+       note: {
+           description:''
+       },
+       signature:{
+           buyer: {
+               signature:'',
+               date:''
+           },
+           seller:{
+               shop: {
+                   name:''
+               },
+               owner: {
+                   signature:'',
+                   date:''
+               }
+           }
+       }
+   };
+
+   this.footer = {
+       page: {
+           number:''
+       },
+       logo: {
+           name:''
+       }
+   };
+
 }();
+
+
 
 
 
