@@ -2,6 +2,16 @@ var quotation = function(data, size) {
 
     var self = this;
 
+    // Font Part --
+    this.font = {
+        pdfMakeLoad : thsarabun,
+        pdfMakeDefaultFont : {
+            font: 'THSarabun',
+            fontSize : 16
+        },
+        canvasFont : 'THSarabun'
+    };
+
     // Data Part --
     this.data = {
         header : {
@@ -42,7 +52,7 @@ var quotation = function(data, size) {
         footer : {}
     };
 
-    // Size Part
+    // Size Part --
     this.size = {
         header : {
             location : {
@@ -53,15 +63,31 @@ var quotation = function(data, size) {
             },
             blank : {
                 width : function() {
-                    return self.page.pageSizePoint.width - self.header.address.width - self.header.information.width;
+                    return zpringSize.page.pageSizePoint.width - self.header.address.width - self.header.information.width;
                 }
             }
         }      
     };
 
 
-    // Layout Part
+    // Layout Part --
     this.layout = {};
+    
+    /////////////////
+    this.layout.header = {
+        stack : ['ee','44','441']
+    };
+
+    /////////////////
+    this.layout.body =  ['eee', this.layout.header];
+
+    /////////////////
+    this.layout.footer = function(currentPage, totalPage) {
+        var text = 'หน้าที่ ' + currentPage + ' / ' + totalPage;
+        return  {text : text, height: paragraphHeight(sentenceToArray(text, zpringSize.page.pageSizePoint.width, self.font.pdfMakeDefaultFont.fontSize + 'pt', self.font.canvasFont)), margin: [zpringSize.page.pageMargin.left, 0, zpringSize.page.pageMargin.right, 0]};
+    };
+
+    this.layout.font = this.font;
 
     return this.layout;
 };
