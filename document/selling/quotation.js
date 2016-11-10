@@ -1,108 +1,5 @@
 var quotation = function(data, size) {
 
-
-
-
-
-
-// this.header = {
-//        location: {
-//            shop: {
-//                name:'',
-//                address:'',
-//                mobilePhone:'',
-//                telePhone:'',
-//                fax:'',
-//                website:'',
-//                taxNumber:''
-//            },
-//            seller: {
-//                name:'',
-//                address:'',
-//                taxNumber:''
-//            }
-//        }, 
-//        doc: {
-//             name : 'ใบสั่งซื้อ',
-//             part1: {
-//                 docNo:'',
-//                 createDate:'',
-//                 credit:'',
-//                 dueDate:'',
-//                 customerName:''
-//             },
-//             part2: {
-//                 workName:'',
-//                 contactName:'',
-//                 mobilePhone:'',
-//                 email:''
-//             }
-//        }
-//    };
-
-//    this.body = {
-//        order: {
-//            orderlist: [
-//                {
-//                    no:'',
-//                    detail: {
-//                        name:'',
-//                        description:''
-//                    },
-//                    quantity: {
-//                        amount:'',
-//                        unit:''
-//                    },
-//                    pricePerUnit:''
-//                }
-//            ]
-//        },
-//        total: {
-//            letter:'',
-//            digit: {
-//                noTax: {
-//                     total:'',
-//                     discount:'',
-//                     afterDiscount:'',
-//                     finalTotal:'',
-//                },
-//                withTax: {
-//                    deductTax:'',
-//                    finalTotal:''
-//                }
-//            }
-//        },
-//        note: {
-//            description:''
-//        },
-//        signature:{
-//            buyer: {
-//                signature:'',
-//                date:''
-//            },
-//            seller:{
-//                shop: {
-//                    name:''
-//                },
-//                owner: {
-//                    signature:'',
-//                    date:''
-//                }
-//            }
-//        }
-//    };
-
-//    this.footer = {
-//        page: {
-//            number:''
-//        },
-//        logo: {
-//            name:''
-//        }
-//    };
-
-
-
     var self = this;
 
     // Data Part --
@@ -110,17 +7,94 @@ var quotation = function(data, size) {
         header : {
             location : {
                 shop : {
-                    name : 'ร้านก้องคำ'
+                    name : 'ร้านก๋องคำ',
+                    address : '123 ต.เเม่สาย อ.เเม่สาย จ.เชียงราย 57130',
+                    mobilePhone : '0123456789',
+                    telePhone : '053123456',
+                    fax : '0533456789',
+                    website : 'eeeeee.com',
+                    taxNumber : '11123456789'
+                },
+                seller : {
+                    name : 'Company1',
+                    address : '222/1 ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200',
+                    taxNumber : '012345 (111/1)'
                 }
-            },
+            }, 
             doc : {
                 part1 : {
-                    docNo : 'QT000002'
+                    docNo : 'QT000001',
+                    date : '27/10/2016',
+                    sellerName : 'Mind',
+                    quote : '00001',
+                },
+                 part2 : {
+                    workName : 'firstProject',
+                    contactName : 'สมศรี ใจดี',
+                    mobilePhone : '081234564',
+                    email : '555@hotmail.com'
                 }
             }
         },
-        body : {},
-        footer : {}
+        body : {
+            order : {
+                orderlist : [
+                    {
+                        no :'1',
+                        detail : {
+                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
+                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
+                        },
+                        quantity : {
+                            amount : '100',
+                            unit : 'กก'
+                        },
+                        pricePerUnit : '59'
+                    }
+                ]
+            },
+            total : {
+                letter : 'ห้าหมื่นเก้าพันบาท',
+                digit : {
+                    noTax : {
+                        total : '59000',
+                        discount : '4000',
+                        afterDiscount : '55000',
+                        finalTotal : '55000',
+                    },
+                    withTax : {
+                        deductTax : '1000',
+                        finalTotal : '54000'
+                    }
+                }
+            },
+            note : {
+                description : 'อ้ย โปรดักชั่นอาร์พีจีบาบูน อุปทานครัวซองทีวี เอาต์ แรงใจ เอาท์อาร์พีจีพอเพียง พะเรอแหววสเก็ตช์ต่อยอดสตรอว์เบอร์รี ธัมโมพงษ์ลาตินบ๊วยว้อดก้า มะกัน กีวี โอวัลตินไมเกรนแดนซ์ล็อบบี้สปอต แซนด์วิชไหร่ อุปัทวเหตุวิลเลจสะเด่าซินโดรม สกาย ﻿กรรมาชนตุ๊กตุ๊กราสเบอร์รีสต๊อคออกแบบ วอลซ์เกมส์ไวกิ้งโชห่วยน็อค'
+            },
+            signature : {
+                buyer : {
+                    signature : '',
+                    date : ''
+                },
+                seller : {
+                    shop : {
+                        name : ''
+                    },
+                    owner : {
+                        signature : '',
+                        date : ''
+                    }
+                }
+            }
+        },
+        footer : {
+            page : {
+                number : ''
+            },
+            logo : {
+                name : ''
+            }
+        }
     };
 
     // Data with Label Part --
@@ -128,21 +102,169 @@ var quotation = function(data, size) {
         header : {
             location : {
                 shop : {
-                    name : { text : this.data.header.location.shop.name, style: 'shopName'}
+                    name : { text : this.data.header.location.shop.name, bold: true },
+                    address: { text : this.data.header.location.shop.address },
+                    mobilePhone: { text : this.data.header.location.shop.mobilePhone },
+                    telePhone: { text : this.data.header.location.shop.telePhone },
+                    fax: { text : this.data.header.location.shop.fax },
+                    website: { text : this.data.header.location.shop.website },
+                    taxNumber: { text : this.data.header.location.shop.taxNumber }
+                },
+                seller : {
+                    label : { text : 'ลูกค้า', style : 'quo_label_color' },
+                    name : { text : this.data.header.location.seller.name },
+                    address : { text : this.data.header.location.seller.address },
+                    taxNumber : { text : this.data.header.location.seller.taxNumber }
                 }
             },
             doc : {
-                label : { text : 'ใบเสนอราคา', style : 'สีส้วม' },
+                label : { text : 'ใบเสนอราคา', style : 'quo_label_color', bold : true },
                 part1 : {
                     docNo : {
-                        label : { text: 'เลขที่', style : 'สีส้วม' },
-                        value : { text: this.data.header.doc.part1.docNo, style : 'บลาๆๆ'  }
+                        label : { text : 'เลขที่', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part1.docNo }
+                    },
+                    date : {
+                        label : { text : 'วันที่', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part1.date }
+                    },
+                    sellerName : { 
+                        label : { text : 'ผู้ขาย', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part1.sellerName }
+                     },
+                    quote : { 
+                        label : { text : 'อ้างอิง', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part1.quote }
+                     }
+                },
+                part2 : {
+                    workName : { 
+                        label : { text : 'ชื่องาน', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part2.workName }
+                     },
+                    contactName : { 
+                        label : { text : 'ผู้ติดต่อ', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part2.contactName }
+                     },
+                    mobilePhone : { 
+                        label : { text : 'เบอร์โทร', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part2.mobilePhone }
+                     },
+                    email : { 
+                        label : { text : 'อีเมลล์', style : 'quo_label_color' },
+                        value : { text : this.data.header.doc.part2.email }
+                     }
+                }
+            }
+        },
+        body : {
+            order : {
+                label : { 
+                    no : { text : '#' },
+                    detail : { text : 'รายละเอียด' },
+                    quantity : { text : 'จำนวน' },
+                    pricePerUnit : { text : 'ราคาต่อหน่วย' },
+                    total : { text : 'ยอดรวม' } 
+                 },
+                orderlist : [
+                    {
+                        no : { text : this.data.body.order.orderlist.no },
+                        detail : {
+                            name : { text : this.data.body.order.orderlist.detail.name, bold : true },
+                            description : { text : this.data.body.order.orderlist.detail.description }
+                        },
+                        quantity : {
+                            amount : { text : this.date.body.order.orderlist.quantity.amount },
+                            unit : { text : this.data.body.order.orderlist.quantity.unit }
+                        },
+                        pricePerUnit : { text : this.data.body.order.orderlist.pricePerUnit }
+                    }
+                ]
+            },
+            total : {
+                letter : { text : this.data.body.total.letter },
+                digit : {
+                    noTax : {
+                        total : { 
+                            label : { text : 'รวมเป็นเงิน', style : 'quo_label_color' },
+                            value : { text : this.data.body.total.digit.noTax.total }
+                         },
+                        discount : { 
+                            label : { text : 'ส่วนลด', style : 'quo_label_color' },
+                            value : { text : this.data.body.total.digit.noTax.discount }
+                         },
+                        afterDiscount : { 
+                            label : { text : 'จำนวนเงินหลังหักส่วนลด', style : 'quo_label_color' },
+                            value : { text : this.data.body.total.digit.noTax.afterDiscount }
+                         },
+                        finalTotal : { 
+                            label : { text : 'จำนวนเงินรวมทั้งสิ้น', style : 'quo_label_color' },
+                            value : { text : this.data.body.total.digit.noTax.finalTotal }
+                         },
+                    },
+                    withTax : {
+                        deductTax : { 
+                            label : { text : 'หักภาษี ณ ที่จ่าย', style : 'quo_label_color' },
+                            value : { text: this.data.body.total.digit.withTax.deductTax }
+                         },
+                        finalTotal : { 
+                            label : { text : 'ยอดชำระ', style : 'quo_label_color' },
+                            value : { text : this.data.body.total.digit.withTax.finalTotal }
+                         }
+                    }
+                }
+            },
+            note : {
+                description : {
+                    label : { text : 'หมายเหตุ', style : 'quo_label_color' },
+                    value : { text : this.data.body.note.description }
+                }
+            },
+            signature : {
+                buyer : {
+                    signature : { 
+                        label : { text : 'ผู้สั่งซื้อสินค้า' },
+                        value : { text : this.data.body.signature.buyer.signature }
+                     },
+                    date : { 
+                        label : { text : 'วันที่' },
+                        value : { text : this.data.body.signature.buyer.date }
+                     }
+                },
+                seller : {
+                    shop : {
+                        name : { 
+                            label : { text : 'ในนาม' },
+                            value : { text : this.data.body.signature.seller.shop.name }
+                         }
+                    },
+                    owner : {
+                        signature : { 
+                            label : { text : 'ผู้อนุมัติ' },
+                            value : { text : this.data.body.signature.seller.owner.signature }
+                         },
+                        date : { 
+                            label : { text : 'วันที่' },
+                            value : { text : this.data.body.signature.seller.owner.date }
+                         }
                     }
                 }
             }
         },
-        body : {},
-        footer : {}
+        footer : { 
+            page : {
+                number : { 
+                    label : { text : 'หน้าที่' },
+                    value : { text : this.data.footer.page.number }
+                 }
+            },
+            logo : {
+                name : { 
+                    label : { text : 'เราใช้' },
+                    value : { text : this.data.footer.logo.name }
+                 }
+            }
+         }
     };
 
     // Size Part
