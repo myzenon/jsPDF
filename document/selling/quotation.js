@@ -205,7 +205,7 @@ var quotation = function(data, size) {
                  },
                 orderlist : function() {
                     var newOrder = [];
-                    this.body.order.orderlist.forEach(function(order) {
+                    this.data.body.order.orderlist.forEach(function(order) {
                         newOrder.push({
                             no : { text : order.no },
                             detail : {
