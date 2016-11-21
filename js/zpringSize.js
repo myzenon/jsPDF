@@ -4,7 +4,7 @@ var zpringSize = new function() {
         pageMargin : {
             left: 36,
             right: 36,
-            top: 12,
+            top: 40, // Closed 12 point
             bottom : 12
         }, 
         pageActualSizePoint : {

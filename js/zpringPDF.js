@@ -1,13 +1,13 @@
 var jsDoc = quotation();
 
 var docDefinition = {
-    header: jsDoc.header,
+    // header: jsDoc.header,
     content: jsDoc.body,
     footer: jsDoc.footer,
     styles : zpringStyle,
     defaultStyle: jsDoc.font.pdfMakeDefaultFont,
     pageSize: zpringSize.page.pageSize,
-    pageMargins: [ zpringSize.page.pageMargin.left, 75, zpringSize.page.pageMargin.right, zpringSize.page.pageMargin.bottom + jsDoc.footer().height ] // [Left, Top, Right , Bottom] or [Horizontal, Vertical]
+    pageMargins: [ zpringSize.page.pageMargin.left, zpringSize.page.pageMargin.top, zpringSize.page.pageMargin.right, zpringSize.page.pageMargin.bottom + jsDoc.footer().height ] // [Left, Top, Right , Bottom] or [Horizontal, Vertical]
 };
 
 createPdf(docDefinition, jsDoc.font.pdfMakeLoad.map, jsDoc.font.pdfMakeLoad.vfs).getDataUrl(function (dataUrl) {
