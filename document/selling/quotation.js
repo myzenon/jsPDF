@@ -310,10 +310,25 @@ var quotation = function(data, size) {
     // Layout Part --
     this.layout = {};
     
+    console.log(this.dataMap.header.location.shop.name);
+
     /////////////////
     this.layout.header = {
         columns: [
-				[],
+				[
+                    this.dataMap.header.location.shop.name,
+                    this.dataMap.header.location.shop.address,
+                    this.dataMap.header.location.shop.mobilePhone,
+                    this.dataMap.header.location.shop.telePhone,
+                    this.dataMap.header.location.shop.fax,
+                    this.dataMap.header.location.shop.website,
+                    this.dataMap.header.location.taxNumber,
+                    '',
+                    this.data.seller.label,
+                    this.data.seller.name,
+                    this.data.seller.address,
+                    this.data.seller.taxNumber
+                ],
 				{
 					text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Malit profecta versatur nomine ocurreret multavit, officiis viveremus aeternum superstitio suspicor alia nostram, quando nostros congressus susceperant concederetur leguntur iam, vigiliae democritea tantopere causae, atilii plerumque ipsas potitur pertineant multis rem quaeri pro, legendum didicisse credere ex maluisset per videtis. Cur discordans praetereat aliae ruinae dirigentur orestem eodem, praetermittenda divinum. Collegisti, deteriora malint loquuntur officii cotidie finitas referri doleamus ambigua acute. Adhaesiones ratione beate arbitraretur detractis perdiscere, constituant hostis polyaeno. Diu concederetur.'
 				},
