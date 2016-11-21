@@ -126,17 +126,32 @@ var quotation = function(data, size) {
                 shop : {
                     name : { text : this.data.header.location.shop.name, bold: true },
                     address: { text : this.data.header.location.shop.address },
-                    mobilePhone: { text : this.data.header.location.shop.mobilePhone },
-                    telePhone: { text : this.data.header.location.shop.telePhone },
-                    fax: { text : this.data.header.location.shop.fax },
+                    mobilePhone: {
+                        label : { text : 'เบอร์มือถือ' },
+                        value : { text : this.data.header.location.shop.mobilePhone }
+                    },
+                    telePhone: {
+                        label : { text : 'โทร' },
+                        value : { text : this.data.header.location.shop.telePhone }
+                    },
+                    fax: {
+                        label : { text : 'เบอร์แฟกซ์' }, 
+                        value : { text : this.data.header.location.shop.fax }
+                    },
                     website: { text : this.data.header.location.shop.website },
-                    taxNumber: { text : this.data.header.location.shop.taxNumber }
+                    taxNumber: { 
+                        label : { text : 'เลขประจำตัวผู้เสียภาษี' },
+                        value : { text : this.data.header.location.shop.taxNumber } 
+                    }
                 },
                 seller : {
                     label : { text : 'ลูกค้า', style : 'quo_label_color' },
                     name : { text : this.data.header.location.seller.name },
                     address : { text : this.data.header.location.seller.address },
-                    taxNumber : { text : this.data.header.location.seller.taxNumber }
+                    taxNumber : { 
+                        label : { text : 'เลขประจำตัวผู้เสียภาษี' },
+                        value : { text : this.data.header.location.seller.taxNumber } 
+                    }
                 }
             },
             doc : {
@@ -188,20 +203,24 @@ var quotation = function(data, size) {
                     pricePerUnit : { text : 'ราคาต่อหน่วย' },
                     total : { text : 'ยอดรวม' } 
                  },
-                orderlist : [
-                    {
-                        no : { text : this.data.body.order.orderlist.no },
-                        detail : {
-                            name : { text : this.data.body.order.orderlist.detail.name, bold : true },
-                            description : { text : this.data.body.order.orderlist.detail.description }
-                        },
-                        quantity : {
-                            amount : { text : this.date.body.order.orderlist.quantity.amount },
-                            unit : { text : this.data.body.order.orderlist.quantity.unit }
-                        },
-                        pricePerUnit : { text : this.data.body.order.orderlist.pricePerUnit }
-                    }
-                ]
+                orderlist : function() {
+                    var newOrder = [];
+                    this.body.order.orderlist.forEach(function(order) {
+                        newOrder.push({
+                            no : { text : order.no },
+                            detail : {
+                                name : { text : order.detail.name, bold : true },
+                                description : { text : order.detail.description }
+                            },
+                            quantity : {
+                                amount : { text : order.quantity.amount },
+                                unit : { text : order.quantity.unit }
+                            },
+                            pricePerUnit : { text : order.pricePerUnit }
+                        });
+                    });
+                    return newOrder;
+                }()
             },
             total : {
                 letter : { text : this.data.body.total.letter },
