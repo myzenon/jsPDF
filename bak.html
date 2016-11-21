@@ -1,0 +1,243 @@
+<body>
+    <input type="button" onclick="openPdf()" value="Open PDF"></input>
+     <script>
+        function getTextWidth(text, font) {
+            // re-use canvas object for better performance
+            var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+            var context = canvas.getContext("2d");
+            context.font = font;
+            var metrics = context.measureText(text);
+            return metrics.width;
+        }
+        function openPdf() {
+            var docDefinition = {
+                content: [ 
+                // row1
+                    {
+                        style: 'section',
+                        table: {
+                            widths: [ '40%',  '*',  '30%'],
+                            body: [
+                                [
+                                  [
+                                    {
+                                        text:'ร้านก๋องคำ',
+                                        style:'nameShop'
+                                    },
+                                    {
+                                        text:'123 ต.เเม่สาย อ.เเม่สาย จ.เชียงราย 57130',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'เบอร์มือถือ 0123456789',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'โทร. 053123456',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'เบอร์แฟกซ์. 053123456',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'eeeeee.com',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'เลขประจำตัวผู้เสียภาษี 111122234',
+                                        style:'detailShop'
+                                    },
+                                    {
+                                        text:'\nลูกค้า',
+                                        style:'customer'
+                                    },
+                                    {
+                                        text:'company1',
+                                        style:'detailCustomer'
+                                    },
+                                    {
+                                        text:'222/1 ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200',
+                                        style:'detailCustomer'
+                                    },
+                                    {
+                                        text:'เลขประจำตัวผู้เสียภาษี 012345 (111/1)',
+                                        style:'detailCustomer'
+                                    }
+                                ],
+                                [
+                                // column2 > blank
+                                ],
+                                [
+                                    {
+                                        text:'ใบเสนอสินค้า',
+                                        style:'headName'
+                                    },
+                                    {
+                                        text:'____________________________',
+                                        style:'line'
+                                    },
+                                    {
+                                        // list
+                                    }
+                                ]
+                                  
+                                ]
+                            ]
+                        },
+                        layout: 'noBorders'
+                    },
+                    // row2
+                    {
+                        style: 'section',
+                        table: {
+                            widths: [ '20%', '*', '15%','15%','15%'],
+                            body: [
+                                [ 
+                                    {
+                                        text: 'first column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'second column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    }
+                                ]
+                            ]
+                        },
+                        layout: 'noBorders'       
+                    },
+                    // row3
+                     {
+                        style: 'section',
+                        table: {
+                            widths: [ '20%', '*', '15%','15%','15%'],
+                            body: [
+                                [ 
+                                    {
+                                        text: 'first column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'second column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF'
+                                    }
+                                ]
+                            ]
+                        },
+                        layout: 'noBorders'       
+                    },
+                    // row4
+                    {
+                        style: 'section',
+                        table: {
+                            widths: [ '50%',  '*',  '40%'],
+                            body: [
+                                [ 
+                                    {
+                                        text: 'first column',
+                                        fillColor: '#555555',
+                                        color: '#00FFFF',
+                                    },
+                                    {
+                                        text: 'second column',
+                                        color: '#555555',
+                                        fillColor: '#dedede'
+                                    },
+                                    {
+                                        text: 'third column',
+                                        fillColor: '#555555'
+                                    },
+                                ]
+                            ]
+                        },
+                        layout: 'noBorders'
+                    },
+                ],
+                styles :{
+                    nameShop: {
+                        fontSize: 14,
+                        bold: true,
+                        color:'#555555'
+                    },
+                    detailShop: {
+                        fontSize: 14,
+                        color:'#555555'
+                    },
+                    customer: {
+                        color:'#F57F17',
+                        fontSize: 14,
+                        bold: true
+                    },
+                    detailCustomer: {
+                        fontSize: 14,
+                        color:'#555555'
+                    },
+                    headName: {
+                        fontSize: 22,
+                        color:'#F57F17',
+                        bold: true,
+                        alignment:'center'
+                    },
+                    line: {
+                        color:'#E0E0E0',
+                        fontSize: 14,
+                        bold: true
+                    },
+                    headDetailSeller: {
+                        color:'#F57F17',
+                        fontSize: 14,
+                        bold: true
+                    },
+                    detailSeller: {
+                        color:'#555555',
+                        fontSize: 14,
+                        bold: true,
+                        alignment:'center'
+                    }
+                },
+    
+                defaultStyle: {
+                    font: 'THSarabun',
+                    fontSize : 20
+                }
+            };
+            
+            createPdf(docDefinition, thsarabun.map, thsarabun.vfs).open();
+        }
+     </script>
+ </body>
