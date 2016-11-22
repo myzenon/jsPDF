@@ -155,7 +155,7 @@ var quotation = function(data, size) {
                 }
             },
             doc : {
-                label : { text : 'ใบเสนอราคา', style : 'quo_label_color', bold : true },
+                label : { alignment: 'center', text : 'ใบเสนอราคา', fontSize:'40', style : 'quo_label_color', bold : true },
                 part1 : {
                     docNo : {
                         label : { text : 'เลขที่', style : 'quo_label_color' },
@@ -319,7 +319,7 @@ var quotation = function(data, size) {
             },
             blank : {
                 width : function() {
-                    return zpringSize.page.pageSizePoint.width - self.header.address.width - self.header.information.width;
+                    return zpringSize.page.pageSizePoint.width - self.size.header.location.width() - self.size.header.doc.width();
                 }
             }
         }      
@@ -328,31 +328,55 @@ var quotation = function(data, size) {
 
     // Layout Part --
     this.layout = {};
-    
-    console.log(this.dataMap.header.location.shop.name);
 
     /////////////////
     this.layout.header = {
         columns: [
-				[
-                    this.dataMap.header.location.shop.name,
-                    this.dataMap.header.location.shop.address,
-                    this.dataMap.header.location.shop.mobilePhone,
-                    this.dataMap.header.location.shop.telePhone,
-                    this.dataMap.header.location.shop.fax,
-                    this.dataMap.header.location.shop.website,
-                    this.dataMap.header.location.taxNumber,
-                    '',
-                    this.data.seller.label,
-                    this.data.seller.name,
-                    this.data.seller.address,
-                    this.data.seller.taxNumber
-                ],
+                { 
+                    width: this.size.header.location.width(),
+                    stack :  [
+                            this.dataMap.header.location.shop.name,
+                            this.dataMap.header.location.shop.address,
+                            textDataWithLabel(this.dataMap.header.location.shop.mobilePhone),
+                            textDataWithLabel(this.dataMap.header.location.shop.telePhone),
+                            textDataWithLabel(this.dataMap.header.location.shop.fax),
+                            this.dataMap.header.location.shop.website,
+                            textDataWithLabel(this.dataMap.header.location.shop.taxNumber),
+                            ' ',
+                            this.dataMap.header.location.seller.label,
+                            this.dataMap.header.location.seller.name,
+                            this.dataMap.header.location.seller.address,
+                            textDataWithLabel(this.dataMap.header.location.seller.taxNumber)
+                    ]
+                },
 				{
-					text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Malit profecta versatur nomine ocurreret multavit, officiis viveremus aeternum superstitio suspicor alia nostram, quando nostros congressus susceperant concederetur leguntur iam, vigiliae democritea tantopere causae, atilii plerumque ipsas potitur pertineant multis rem quaeri pro, legendum didicisse credere ex maluisset per videtis. Cur discordans praetereat aliae ruinae dirigentur orestem eodem, praetermittenda divinum. Collegisti, deteriora malint loquuntur officii cotidie finitas referri doleamus ambigua acute. Adhaesiones ratione beate arbitraretur detractis perdiscere, constituant hostis polyaeno. Diu concederetur.'
-				},
+                    width: this.size.header.blank.width(),
+                    text : ' '
+                },
 				{
-					text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Malit profecta versatur nomine ocurreret multavit, officiis viveremus aeternum superstitio suspicor alia nostram, quando nostros congressus susceperant concederetur leguntur iam, vigiliae democritea tantopere causae, atilii plerumque ipsas potitur pertineant multis rem quaeri pro, legendum didicisse credere ex maluisset per videtis. Cur discordans praetereat aliae ruinae dirigentur orestem eodem, praetermittenda divinum. Collegisti, deteriora malint loquuntur officii cotidie finitas referri doleamus ambigua acute. Adhaesiones ratione beate arbitraretur detractis perdiscere, constituant hostis polyaeno. Diu concederetur.'
+					width: this.size.header.doc.width() ,
+                    stack : [
+                        this.dataMap.header.doc.label,
+                        hrLine(this.size.header.doc.width(), { margin: [0, 5]}),
+                        {
+                            table: {    
+                                    widths: [ 50, 150 ],
+                                    body: [
+                                            textTableDataWithLabel(this.dataMap.header.doc.part1.docNo),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part1.date),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part1.sellerName),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part1.quote),
+                                            [hrLine(this.size.header.doc.width(), { margin: [0, 5], colSpan: 2 }), {}],
+                                            textTableDataWithLabel(this.dataMap.header.doc.part2.workName),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part2.contactName),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part2.mobilePhone),
+                                            textTableDataWithLabel(this.dataMap.header.doc.part2.email)
+                                    ]
+                            },
+                            layout: 'noBorders'
+                        },
+                    
+                    ]
 				}
 			]
     };

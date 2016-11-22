@@ -47,6 +47,22 @@ var paragraphHeight = function(sentenceArray) {
     return height;
 }
 
+var textDataWithLabel = function(data) {
+    return {text : [data.label, ' ', data.value]};
+};
+
+var textTableDataWithLabel = function(data) {
+    return [data.label, data.value];
+};
+
+var hrLine = function(width, options) {
+    var lineData = { canvas: [{ type: 'line', x1: 0, y1: 0, x2: width, y2: 0, lineWidth: 1,  color: '#AAA' }]};
+    for(option in options) {
+        lineData[option] = options[option];
+    }
+    return lineData;
+};
+
 // Preload Font by Javascript
 getTextSizePoint('','1pt');
 getTextSizePoint('','bold 1pt');
