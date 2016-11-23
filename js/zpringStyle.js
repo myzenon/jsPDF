@@ -1,7 +1,10 @@
 var zpringStyle = {
 
     quo_label_color : {
-        color:'#F57F17'
+        color: '#E19326'
     },
-   
+    
+    uni_doc_label_fontSize : {
+        fontSize: '30'
+    }
 };

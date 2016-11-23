@@ -164,7 +164,7 @@ var quotation = function(data, size) {
                 }
             },
             doc : {
-                label : { alignment: 'center', text : 'ใบเสนอราคา', fontSize:'40', style : 'quo_label_color', bold : true },
+                label : { alignment: 'center', text : 'ใบเสนอราคา', style : ['quo_label_color', 'uni_doc_label_fontSize'], bold : true },
                 part1 : {
                     docNo : {
                         label : { text : 'เลขที่', style : 'quo_label_color' },
@@ -403,23 +403,36 @@ var quotation = function(data, size) {
 					width: this.size.header.doc.width() ,
                     stack : [
                         this.dataMap.header.doc.label,
-                        hrLine(this.size.header.doc.width(), { margin: [0, 5]}),
+                        hrLine(this.size.header.doc.width(), { margin: [0, 10]}),
                         {
                             table: {    
-                                    widths: [ 50, 150 ],
+                                    widths: [ 80, 120 ],
                                     body: [
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.docNo),
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.date),
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.sellerName),
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.quote),
-                                            [hrLine(this.size.header.doc.width(), { margin: [0, 5], colSpan: 2 }), {}],
+                                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.workName),
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.contactName),
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.mobilePhone),
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.email)
                                     ]
                             },
-                            layout: 'noBorders'
+                            layout: {
+                                hLineColor: function() {
+                                    return 'white';
+                                },
+                                vLineColor: function(){
+                                    return 'white';
+                                },
+                                paddingTop: function() {
+                                    return 0;
+                                },
+                                paddingBottom: function() {
+                                    return 0;
+                                } 
+                            }
                         },
                     
                     ]
