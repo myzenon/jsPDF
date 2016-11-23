@@ -48,28 +48,37 @@ var quotation = function(data, size) {
         },
         body : {
             order : {
-                orderlist : [
+                orderList : [
                     {
-                        no :'1',
+                        detail : {
+                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
+                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
+                        },
+                        quantity : {
+                            amount : '5',
+                            unit : 'ถุง'
+                        },
+                        pricePerUnit : '1250'
+                    },
+                    {
                         detail : {
                             name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
                             description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
                         },
                         quantity : {
                             amount : '100',
-                            unit : 'กก'
+                            unit : 'กก.'
                         },
                         pricePerUnit : '59'
                     },
                     {
-                        no :'2',
                         detail : {
                             name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
                             description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
                         },
                         quantity : {
                             amount : '100',
-                            unit : 'กก'
+                            unit : 'เครื่อง'
                         },
                         pricePerUnit : '59'
                     }
@@ -197,17 +206,18 @@ var quotation = function(data, size) {
         body : {
             order : {
                 label : { 
-                    no : { text : '#' },
-                    detail : { text : 'รายละเอียด' },
-                    quantity : { text : 'จำนวน' },
-                    pricePerUnit : { text : 'ราคาต่อหน่วย' },
-                    total : { text : 'ยอดรวม' } 
+                    no : { text : '#', alignment: 'center' },
+                    detail : { text : 'รายละเอียด', alignment: 'center' },
+                    quantity : { text : 'จำนวน', alignment: 'left' },
+                    pricePerUnit : { text : 'ราคาต่อหน่วย', alignment: 'right' },
+                    totalPrice : { text : 'ยอดรวม', alignment: 'right' } 
                  },
-                orderlist : function() {
+                orderList : function() {
                     var newOrder = [];
-                    this.data.body.order.orderlist.forEach(function(order) {
+                    var i = 1;
+                    this.data.body.order.orderList.forEach(function(order) {
                         newOrder.push({
-                            no : { text : order.no },
+                            no : { text : i.toString() },
                             detail : {
                                 name : { text : order.detail.name, bold : true },
                                 description : { text : order.detail.description }
@@ -218,6 +228,7 @@ var quotation = function(data, size) {
                             },
                             pricePerUnit : { text : order.pricePerUnit }
                         });
+                        i++;
                     });
                     return newOrder;
                 }()
@@ -315,11 +326,46 @@ var quotation = function(data, size) {
                 width: function() { return 300; } 
             },
             doc : {
-                width: function() { return 200; } 
+                width: function() { return 200; },
+                label: {
+                    width: function() { return 50; }
+                },
+                value : {
+                    width: function() { return 150; }
+                }
             },
             blank : {
                 width : function() {
                     return zpringSize.page.pageSizePoint.width - self.size.header.location.width() - self.size.header.doc.width();
+                }
+            }
+        },
+        body : {
+            order : {
+                no : {
+                    width: function() { 
+                        return 10;
+                    }
+                },
+                detail : {
+                    width: function() {
+                        return 250;
+                    }
+                },
+                quantity : {
+                    width: function() {
+                        return '*';
+                    }
+                },
+                pricePerUnit : {
+                    width: function() {
+                        return '*';
+                    }
+                },
+                totalPrice : {
+                    width : function() {
+                        return '*';
+                    }
                 }
             }
         }      
@@ -382,7 +428,14 @@ var quotation = function(data, size) {
     };
 
     /////////////////
-    this.layout.body =  [this.layout.header];
+    this.layout.body =  {
+        stack : [
+                    this.layout.header,
+                    ' ',
+                    createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font),
+                ]
+    };
+
 
     /////////////////
     this.layout.footer = function(currentPage, totalPage) {
