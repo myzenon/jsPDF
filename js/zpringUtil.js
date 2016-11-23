@@ -63,6 +63,64 @@ var hrLine = function(width, options) {
     return lineData;
 };
 
+var setTextAttr = function(text, attr) {
+    if(typeof(text) === 'object') {
+        var textObject = text;
+    }
+    else {
+        var textObject = {text : text};
+    }
+    for(a in attr) {
+        text[a] = attr[a];
+    }
+    return textObject;
+};
+
+var setArrayTextAttr = function(array, attr) {
+    for(index in array) {
+        array[index] = setTextAttr(array[index], attr);
+    }
+    return array;
+};
+
+var createOrderTable = function(widths, label, data) {
+    var bugWidthPoint = 85;
+    var tableObject = {
+        table : {
+            widths: widths,
+            body : [
+                [label.no, label.detail, label.quantity, label.pricePerUnit, label.totalPrice],
+            ]
+        },
+        layout : {
+            vLineWidth : function() { return 0; },
+            hLineColor : function() { return '#AAA'; }
+        }
+    };
+    data.forEach(function(data) {
+        data.no.alignment = 'center';
+        var quantity = {text : [data.quantity.amount, ' ', data.quantity.unit], alignment : 'center'};
+        data.pricePerUnit.text = parseFloat(data.pricePerUnit.text).toFixed(2);
+        data.pricePerUnit.alignment = 'right';
+        var totalPrice = (data.pricePerUnit.text * data.quantity.amount.text).toString();
+        totalPrice = { text: parseFloat(totalPrice).toFixed(2), alignment : 'right' };
+        tableObject.table.body.push([
+            data.no, 
+            {
+                stack : [
+                    setArrayTextAttr(sentenceToArray(data.detail.name.text, widths[1] - bugWidthPoint, font.pdfMakeDefaultFont.fontSize + ' pt bold', font.canvasFont), {bold : true}),
+                    sentenceToArray(data.detail.description.text, widths[1] - bugWidthPoint, font.pdfMakeDefaultFont.fontSize + ' pt', font.canvasFont)
+                ],
+                alignment : 'left'
+            },
+            quantity,
+            data.pricePerUnit,
+            totalPrice
+        ]);
+    });
+    return tableObject;
+};
+
 // Preload Font by Javascript
 getTextSizePoint('','1pt');
 getTextSizePoint('','bold 1pt');
