@@ -95,14 +95,14 @@ var quotation = function(data, size) {
                 letter : 'ห้าหมื่นเก้าพันบาท',
                 digit : {
                     noTax : {
-                        total : '59000',
-                        discount : '4000',
-                        afterDiscount : '55000',
-                        finalTotal : '55000',
+                        total : '59000 บาท',
+                        discount : '4000 บาท',
+                        afterDiscount : '55000 บาท',
+                        finalTotal : '55000 บาท',
                     },
                     withTax : {
-                        deductTax : '1000',
-                        finalTotal : '54000'
+                        deductTax : '1000 บาท',
+                        finalTotal : '54000 บาท'
                     }
                 }
             },
@@ -333,7 +333,7 @@ var quotation = function(data, size) {
                 width: function() { return 300; } 
             },
             doc : {
-                width: function() { return 200; },
+                width: function() { return 220; },
                 label: {
                     width: function() { return 50; }
                 },
@@ -374,9 +374,53 @@ var quotation = function(data, size) {
                         return '*';
                     }
                 }
+            },
+            total : {
+               letter : {
+                   width : function() {
+                       return zpringSize.page.pageSizePoint.width - self.size.body.total.digit.width();
+                   }
+               },
+               digit : {
+                   width : function() {
+                       return 220;
+                   }
+               }
+            },
+            signature : {
+                buyer : {
+                    signature : {
+                        width : function() {
+                            return 75;
+                        }
+                    },
+                    date : {
+                        width : function() {
+                            return 75;
+                        }
+                    }
+                },
+                seller : {
+                    signature : {
+                        width : function() {
+                            return 75;
+                        }
+                    },
+                    date : {
+                        width : function() {
+                            return 75;
+                        }
+                    }
+                },
+                blank : {
+                    width : function() {
+                        return '*';
+                    }
+                }
             }
         }      
     };
+
 
 
     // Layout Part --
@@ -448,13 +492,92 @@ var quotation = function(data, size) {
     };
 
     /////////////////
-    this.layout.body =  {
-        stack : [
-                    this.layout.header,
-                    ' ',
-                    createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font, 120),
+     this.layout.body =  [
+         {
+             stack : [
+                         this.layout.header,
+                         ' ',
+                         createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font, 120),
+                     ]
+            
+         },
+         ' ',
+          { 
+              columns : [
+                 {
+                     width : this.size.body.total.letter.width(),
+                     text : 'test1'
+                 },
+                 {
+                     width : this.size.body.total.digit.width(),
+                     stack : [
+                         {
+                         table : {
+                         widths : [120, 80],
+                         body: [
+
+                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.total),
+                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.discount),
+                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.afterDiscount),
+                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.finalTotal),
+                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
+                            textTableDataWithLabel(this.dataMap.body.total.digit.withTax.deductTax),
+                            textTableDataWithLabel(this.dataMap.body.total.digit.withTax.finalTotal)
+                                            
+                                ]
+                                
+                            },
+                            alignment: 'right',
+                            layout : {
+                                hLineColor: function() {
+                                    return 'white';
+                                },
+                                vLineColor: function() {
+                                    return 'white';
+                                },
+                                paddingTop: function() {
+                                    return 0;
+                                },
+                                paddingBottom: function() {
+                                    return 0;
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+         },
+         this.dataMap.body.note.description.label,
+         this.dataMap.body.note.description.value,
+         ' ',
+         ' ',
+         ' ',
+         {
+            table : {
+                widths : [this.size.body.signature.buyer.signature.width(),this.size.body.signature.buyer.date.width(),
+                this.size.body.signature.blank.width(), this.size.body.signature.seller.signature.width(),this.size.body.signature.seller.date.width()],
+
+                body: [
+                    [
+                        hrLine(this.size.body.signature.buyer.signature.width()),
+                        hrLine(this.size.body.signature.buyer.date.width()),
+                        '',
+                        hrLine(this.size.body.signature.seller.signature.width()),
+                        hrLine(this.size.body.signature.seller.date.width())
+                    ],
+                    [
+                        this.dataMap.body.signature.buyer.signature.label,
+                        this.dataMap.body.signature.buyer.date.label,
+                        '',
+                        this.dataMap.body.signature.seller.owner.signature.label,
+                        this.dataMap.body.signature.seller.owner.date.label
+                    ]
                 ]
-    };
+            },
+            alignment : 'center',
+            layout : 'noBorders'
+         }
+    ]
 
 
     /////////////////
