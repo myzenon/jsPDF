@@ -335,15 +335,15 @@ var quotation = function(data, size) {
             doc : {
                 width: function() { return 220; },
                 label: {
-                    width: function() { return 50; }
+                    width: function() { return 80; }
                 },
                 value : {
-                    width: function() { return 150; }
+                    width: function() { return 120; }
                 }
             },
             blank : {
                 width : function() {
-                    return zpringSize.page.pageSizePoint.width - self.size.header.location.width() - self.size.header.doc.width();
+                    return '*';
                 }
             }
         },
@@ -382,9 +382,17 @@ var quotation = function(data, size) {
                    }
                },
                digit : {
-                   width : function() {
-                       return 220;
-                   }
+                    width : function() {
+                        return 220;
+                    },
+                    label : {
+                        width: function() {
+                            return self.size.body.total.digit.width() - self.size.body.total.digit.value.width() - 20;
+                        }
+                    },
+                    value : {
+                        width : function() { return 80; }
+                    }
                }
             },
             signature : {
@@ -456,7 +464,7 @@ var quotation = function(data, size) {
                         this.dataMap.header.doc.label,
                         {
                             table: {    
-                                    widths: [ 80, 120 ],
+                                    widths: [ this.size.header.doc.label.width(), this.size.header.doc.value.width() ],
                                     body: [
                                             [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.docNo),
@@ -502,30 +510,28 @@ var quotation = function(data, size) {
             
          },
          ' ',
-          { 
+        { 
+              pageBreak : 'before',
               columns : [
                  {
                      width : this.size.body.total.letter.width(),
-                     text : 'test1'
+                     text : ''
                  },
                  {
                      width : this.size.body.total.digit.width(),
                      stack : [
                          {
-                         table : {
-                         widths : [120, 80],
-                         body: [
-
-                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.total),
-                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.discount),
-                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.afterDiscount),
-                            textTableDataWithLabel(this.dataMap.body.total.digit.noTax.finalTotal),
-                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
-                            textTableDataWithLabel(this.dataMap.body.total.digit.withTax.deductTax),
-                            textTableDataWithLabel(this.dataMap.body.total.digit.withTax.finalTotal)
-                                            
+                            table : {
+                                widths : [this.size.body.total.digit.label.width(), this.size.body.total.digit.value.width()],
+                                body: [
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.total),
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.discount),
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.afterDiscount),
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.finalTotal),
+                                    [hrLine(this.size.body.total.digit.width(), { margin: [0, 10], colSpan: 2 }), {}],
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.withTax.deductTax),
+                                    textTableDataWithLabel(this.dataMap.body.total.digit.withTax.finalTotal)
                                 ]
-                                
                             },
                             alignment: 'right',
                             layout : {
