@@ -1,4 +1,4 @@
-// Set document type here !!
+// Set document type here initialize with data !!
 var jsDoc = quotation();
 
 var docDefinition = {
