@@ -1,3 +1,4 @@
+// Point unit
 var zpringSize = new function() {
     this.page = {
         pageSize : 'A4',
