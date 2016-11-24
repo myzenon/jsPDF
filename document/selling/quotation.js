@@ -4,13 +4,20 @@ var quotation = function(data, size) {
 
     // Font Part --
     this.font = {
+        name : 'THSarabun',
+        size : 14,
         pdfMakeLoad : thsarabun,
-        pdfMakeDefaultFont : {
-            font: 'THSarabun',
-            fontSize : 16
-        },
-        canvasFont : 'THSarabun'
+        canvasFont : function(type) {
+            return getCanvasFont(self.font.name, self.font.size, type);
+        }
+    }
+    this.font.pdfMakeDefaultFont = {
+        font: this.font.name,
+        fontSize : this.font.size,        
     };
+
+    // Pre-load font
+    preloadFont(this.font.canvasFont);
 
     // Data Part --
     this.data = {
@@ -22,7 +29,7 @@ var quotation = function(data, size) {
                     mobilePhone : '0123456789',
                     telePhone : '053123456',
                     fax : '0533456789',
-                    website : 'eeeeee.com',
+                    website : 'http://www.fffeefsd;fsdf;lsdkfl;sdkfsdf;ldskl;fkl;sdfkeeee.com',
                     taxNumber : '11123456789'
                 },
                 seller : {
@@ -35,14 +42,14 @@ var quotation = function(data, size) {
                 part1 : {
                     docNo : 'QT000001',
                     date : '27/10/2016',
-                    sellerName : 'Mind',
+                    sellerName : 'นางสาวอรอนงค์ ภูรีมหาวงศ์',
                     quote : '00001',
                 },
                  part2 : {
-                    workName : 'firstProject',
+                    workName : 'โปรเจ็คร้อยล้าน กินบ้านกินเมือง',
                     contactName : 'สมศรี ใจดี',
                     mobilePhone : '081234564',
-                    email : '555@hotmail.com'
+                    email : 'Onanongpureemahawong@hotmail.com'
                 }
             }
         },
@@ -55,7 +62,7 @@ var quotation = function(data, size) {
                             description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
                         },
                         quantity : {
-                            amount : '5',
+                            amount : '500000000',
                             unit : 'ถุง'
                         },
                         pricePerUnit : '1250'
@@ -208,7 +215,7 @@ var quotation = function(data, size) {
                 label : { 
                     no : { text : '#', alignment: 'center' },
                     detail : { text : 'รายละเอียด', alignment: 'center' },
-                    quantity : { text : 'จำนวน', alignment: 'left' },
+                    quantity : { text : 'จำนวน', alignment: 'center' },
                     pricePerUnit : { text : 'ราคาต่อหน่วย', alignment: 'right' },
                     totalPrice : { text : 'ยอดรวม', alignment: 'right' } 
                  },
@@ -386,7 +393,7 @@ var quotation = function(data, size) {
                             textDataWithLabel(this.dataMap.header.location.shop.mobilePhone),
                             textDataWithLabel(this.dataMap.header.location.shop.telePhone),
                             textDataWithLabel(this.dataMap.header.location.shop.fax),
-                            this.dataMap.header.location.shop.website,
+                            oneLineToMutilple(this.dataMap.header.location.shop.website, this.size.header.location.width(), this.font, -80),
                             textDataWithLabel(this.dataMap.header.location.shop.taxNumber),
                             ' ',
                             this.dataMap.header.location.seller.label,
@@ -403,11 +410,11 @@ var quotation = function(data, size) {
 					width: this.size.header.doc.width() ,
                     stack : [
                         this.dataMap.header.doc.label,
-                        hrLine(this.size.header.doc.width(), { margin: [0, 10]}),
                         {
                             table: {    
                                     widths: [ 80, 120 ],
                                     body: [
+                                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.docNo),
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.date),
                                             textTableDataWithLabel(this.dataMap.header.doc.part1.sellerName),
@@ -416,7 +423,7 @@ var quotation = function(data, size) {
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.workName),
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.contactName),
                                             textTableDataWithLabel(this.dataMap.header.doc.part2.mobilePhone),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part2.email)
+                                            textTableDataMulWithLabel(this.dataMap.header.doc.part2.email, this.size.header.doc.width(), this.font, -80)
                                     ]
                             },
                             layout: {
@@ -445,7 +452,7 @@ var quotation = function(data, size) {
         stack : [
                     this.layout.header,
                     ' ',
-                    createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font),
+                    createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font, 120),
                 ]
     };
 
@@ -453,7 +460,7 @@ var quotation = function(data, size) {
     /////////////////
     this.layout.footer = function(currentPage, totalPage) {
         var text = 'หน้าที่ ' + currentPage + ' / ' + totalPage;
-        return  {text : text, height: paragraphHeight(sentenceToArray(text, zpringSize.page.pageSizePoint.width, self.font.pdfMakeDefaultFont.fontSize + 'pt', self.font.canvasFont)), margin: [zpringSize.page.pageMargin.left, 0, zpringSize.page.pageMargin.right, 0]};
+        return  {text : text, height: paragraphHeight(sentenceToArray(text, zpringSize.page.pageSizePoint.width, this.font.canvasFont())), margin: [zpringSize.page.pageMargin.left, 0, zpringSize.page.pageMargin.right, 0]};
     };
 
     this.layout.font = this.font;

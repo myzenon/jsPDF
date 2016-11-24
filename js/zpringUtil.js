@@ -1,21 +1,21 @@
+// Font Function
 var getTextSizeCanvas = document.createElement("canvas");
 var getTextSizePoint = function(text, font) {
     var canvas = getTextSizeCanvas;
     var context = canvas.getContext("2d");
     context.font = font;
     var metrics = context.measureText(text);
-    // For Testing Canvas
 
+    // For Testing Canvas
+    //-------------------------------------------------------------
     // context.clearRect(0, 0, canvas.width, canvas.height);
     // context.fillText(text, 0, 30);
     // document.body.appendChild(canvas);
 
-    // 1px = 0.75pt
-    return {width : metrics.width * 0.75, height: parseInt(context.font)} ;
+    return {width : (metrics.width * 0.75), height: parseInt(context.font)} ;
 };
 
-var sentenceToArray = function(sentence, widthPoint, fontStyle, fontName) {
-    var font = fontStyle + ' ' + fontName;
+var sentenceToArray = function(sentence, widthPoint, font) {
     var wordcut = require('wordcut');
     wordcut.init();
     var wordArray = wordcut.cut(sentence).split('|');
@@ -38,7 +38,51 @@ var sentenceToArray = function(sentence, widthPoint, fontStyle, fontName) {
     return sentenceArray;
 };
 
+var charToArray = function(char, widthPoint, font) {
+    var charArray = char.split('');
+    var sentenceArray = [];
+    var sentenceTemp = '';
+    for(var indexofChar = 0; indexofChar < charArray.length; indexofChar++) {
+        if(getTextSizePoint(sentenceTemp + charArray[indexofChar], font).width > widthPoint) {
+            var sentenceOutput = getTextSizePoint(sentenceTemp, font);
+            sentenceOutput.text = sentenceTemp;
+            sentenceArray.push(sentenceOutput);
+            sentenceTemp = '';
+        }
+        sentenceTemp += charArray[indexofChar];
+        if((indexofChar + 1) === charArray.length) {
+            var sentenceOutput = getTextSizePoint(sentenceTemp, font);
+            sentenceOutput.text = sentenceTemp;
+            sentenceArray.push(sentenceOutput);
+        }
+    }
+    return sentenceArray;
+};
 
+var getCanvasFont = function(fontName, fontSize, type) {
+    if(type === 'b') {
+        return 'bold ' + fontSize + 'pt ' + fontName;
+    }
+    else if(type === 'i') {
+        return 'italic ' + fontSize + 'pt ' + fontName;
+    }
+    else if(type === 'bi') {
+        return 'bold italic ' + fontSize + 'pt ' + fontName;
+    }
+    else {
+        return fontSize + 'pt ' + fontName;
+    }
+};
+
+var preloadFont = function(fontCanvas) {
+    getTextSizePoint('', fontCanvas());
+    getTextSizePoint('', fontCanvas('b'));
+    getTextSizePoint('', fontCanvas('i'));
+    getTextSizePoint('', fontCanvas('bi'));
+};
+
+
+// PDFMake Function
 var paragraphHeight = function(sentenceArray) {
     var height = 0;
     sentenceArray.forEach(function (sentence) {
@@ -47,6 +91,13 @@ var paragraphHeight = function(sentenceArray) {
     return height;
 }
 
+var oneLineToMutilple = function(data, width, font, bugWidthPoint) {
+    if(typeof(data) === 'object') {
+        data = data.text;
+    }
+    return { stack : charToArray(data, width + bugWidthPoint, this.font.canvasFont())}
+};
+
 var textDataWithLabel = function(data) {
     return {text : [data.label, ' ', data.value]};
 };
@@ -54,6 +105,12 @@ var textDataWithLabel = function(data) {
 var textTableDataWithLabel = function(data) {
     return [data.label, data.value];
 };
+
+var textTableDataMulWithLabel = function(data, width, font, bugWidthPoint) {
+    var dataTable = textTableDataWithLabel(data);
+    dataTable[1] = oneLineToMutilple(dataTable[1], width, font, bugWidthPoint);
+    return dataTable;
+}
 
 var hrLine = function(width, options) {
     var lineData = { canvas: [{ type: 'line', x1: 0, y1: 0, x2: width, y2: 0, lineWidth: 1,  color: '#AAA' }]};
@@ -83,8 +140,7 @@ var setArrayTextAttr = function(array, attr) {
     return array;
 };
 
-var createOrderTable = function(widths, label, data) {
-    var bugWidthPoint = 85;
+var createOrderTable = function(widths, label, data, font, bugWidthPoint) {
     var tableObject = {
         table : {
             widths: widths,
@@ -108,8 +164,8 @@ var createOrderTable = function(widths, label, data) {
             data.no, 
             {
                 stack : [
-                    setArrayTextAttr(sentenceToArray(data.detail.name.text, widths[1] - bugWidthPoint, font.pdfMakeDefaultFont.fontSize + ' pt bold', font.canvasFont), {bold : true}),
-                    sentenceToArray(data.detail.description.text, widths[1] - bugWidthPoint, font.pdfMakeDefaultFont.fontSize + ' pt', font.canvasFont)
+                    setArrayTextAttr(sentenceToArray(data.detail.name.text, widths[1] + bugWidthPoint, font.canvasFont('b')), {bold : true}),
+                    sentenceToArray(data.detail.description.text, widths[1] + bugWidthPoint, font.canvasFont())
                 ],
                 alignment : 'left'
             },
@@ -120,9 +176,3 @@ var createOrderTable = function(widths, label, data) {
     });
     return tableObject;
 };
-
-// Preload Font by Javascript
-getTextSizePoint('','1pt');
-getTextSizePoint('','bold 1pt');
-getTextSizePoint('','italic 1pt');
-getTextSizePoint('','bold italic 1pt');
