@@ -1,7 +1,9 @@
+// Set document type here !!
 var jsDoc = quotation();
 
 var docDefinition = {
     header: jsDoc.header,
+    // Header and Content merge in content
     content: jsDoc.body,
     footer: jsDoc.footer,
     styles : zpringStyle,
