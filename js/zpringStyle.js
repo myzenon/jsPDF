@@ -1,3 +1,4 @@
+// กำหนด Style ของเอกสาร [คล้าย css]
 var zpringStyle = {
 
     quo_label_color : {
@@ -7,4 +8,5 @@ var zpringStyle = {
     uni_doc_label_fontSize : {
         fontSize: '30'
     }
+    
 };

@@ -1,16 +1,26 @@
-// Set document type here initialize with data !!
-var jsDoc = quotation();
+var data = null; // จำลองตัวแปรข้อมูล
+var size = null; // จำลองตัวแปรขนาด
 
-var docDefinition = {
-    // Header and Content merge in content
-    content: jsDoc.body,
-    footer: jsDoc.footer,
-    styles : zpringStyle,
-    defaultStyle: jsDoc.font.pdfMakeDefaultFont,
-    pageSize: zpringSize.page.pageSize,
-    pageMargins: [ zpringSize.page.pageMargin.left, zpringSize.page.pageMargin.top, zpringSize.page.pageMargin.right, zpringSize.page.pageMargin.bottom + jsDoc.footer().height ] // [Left, Top, Right , Bottom] or [Horizontal, Vertical]
-};
+// เรียก factory ออกมาสร้างเอกสารให้ โดยระบุชนิดเอกสาร, ข้อมูล และขนาด [ขนาดยังไม่ได้ใช้ ณ ขณะนี้]
+zpringFactory('quotation', data, size).then(function(jsDoc) {
 
-createPdf(docDefinition, jsDoc.font.pdfMakeLoad.map, jsDoc.font.pdfMakeLoad.vfs).getDataUrl(function (dataUrl) {
-    document.getElementById('pdfIframe').src = dataUrl;
+    // ทำการ Map ระหว่างข้อมูลในเอกสาร กับระบบ PDFMake
+    var docDefinition = {
+        // Header ได้ทำการรวมไว้ใน content อยู่แล้ว
+        content: jsDoc.layout.body, 
+        footer: jsDoc.layout.footer,
+        styles : zpringStyle,
+        defaultStyle: {
+            font: jsDoc.typeface.name,
+            fontSize : jsDoc.font.size, 
+        },
+        pageSize: zpringSize.page.pageSize,
+        pageMargins: [ zpringSize.page.pageMargin.left, zpringSize.page.pageMargin.top, zpringSize.page.pageMargin.right, jsDoc.size.footer.height] // [Left, Top, Right , Bottom] หรือ [Horizontal, Vertical]
+    };
+
+    // สร้าง PDF ลงใน iFrame
+    createPdf(docDefinition, jsDoc.typeface.pdfMake, jsDoc.typeface.vfs).getDataUrl(function (dataUrl) {
+        document.getElementById('pdfIframe').src = dataUrl;
+    });
+
 });

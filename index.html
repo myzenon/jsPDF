@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>ZpringPDF</title>
+
+    <!--ไฟล์ที่จำเป็นสำหรับ script ฝั่ง browser-->
     <script src="js/wordcut.min.js"></script>
-    <link rel="stylesheet" href="thsarabun/thsarabun.css">
-    <script src="js/pdfmake-browserified.min.js"></script>
-    <script src="thsarabun/thsarabun.js"></script>
-    <script src="thsarabun/thsarabun.map.js"></script>
+    <script src="js/zpringUtil-browser.js"></script>
+    
     <style>
         html, body { 
             margin: 0;
@@ -22,11 +22,27 @@
     </style>
 </head>
 <body>
+
     <iframe id="pdfIframe" frameborder="0"></iframe>
-    <script src="js/zpringUtil.js"></script>
-    <script src="js/zpringSize.js"></script>
-    <script src="js/zpringStyle.js"></script>
+
+    <!--ไฟล์ที่จำเป็นสำหรับ script ฝั่ง worker-->
+
+    <!--Load Libraries-->
+    <script src="js/thai-money-text.min.js"></script>
+    <script src="js/pdfmake-browserified.min.js"></script>
+
+    <!--Load Font-->
+    <script src="typeface/thsarabun.js"></script>
+
+    <!--Load Document-->
     <script src="document/selling/quotation.js"></script>
-    <script src="js/zpringPDF.js"></script>
+    
+    <!--Load PDFScript-->
+    <script src="js/zpringUtil-worker.js"></script>
+    <script src="js/zpringStyle.js"></script>
+    <script src="js/zpringSize.js"></script>
+    <script src="js/zpringFactory.js"></script>
+    <script src="js/zpringPDF.js"></script> 
+
 </body>
 </html>

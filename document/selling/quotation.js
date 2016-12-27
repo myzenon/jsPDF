@@ -1,25 +1,22 @@
 var quotation = function(data, size) {
 
+    // Data parameter สำหรับใส่ข้อมูลที่จะรับเข้ามา
+    // Size parameter สำหรับการกำหนด ขนาดของ กระดาษ [ ยังไม่ได้ทำ ]
+
     var self = this;
 
-    // Font Part --
+    // กำหนด font ของเอกสาร
+    this.typeface = new thsarabun();
+
+    // ตั้งค่าคุณสมบัติของ font ในเอกสาร
     this.font = {
-        name : 'THSarabun',
         size : 14,
-        pdfMakeLoad : thsarabun,
-        canvasFont : function(type) {
-            return getCanvasFont(self.font.name, self.font.size, type);
+        canvasFont : function(type, size) {
+            return utilW.canvasFontName(self.typeface.name, size ? size : self.font.size, type);
         }
     }
-    this.font.pdfMakeDefaultFont = {
-        font: this.font.name,
-        fontSize : this.font.size,        
-    };
 
-    // Pre-load font
-    preloadFont(this.font.canvasFont);
-
-    // Data Part --
+    // ตัวอย่าง Object ของ data
     this.data = {
         header : {
             location : {
@@ -88,11 +85,65 @@ var quotation = function(data, size) {
                             unit : 'เครื่อง'
                         },
                         pricePerUnit : '59'
-                    }
+                    },
+                    {
+                        detail : {
+                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
+                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
+                        },
+                        quantity : {
+                            amount : '100',
+                            unit : 'กก.'
+                        },
+                        pricePerUnit : '59'
+                    },
+                    {
+                        detail : {
+                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
+                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
+                        },
+                        quantity : {
+                            amount : '100',
+                            unit : 'เครื่อง'
+                        },
+                        pricePerUnit : '59'
+                    },
+                    {
+                        detail : {
+                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
+                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
+                        },
+                        quantity : {
+                            amount : '500000000',
+                            unit : 'ถุง'
+                        },
+                        pricePerUnit : '1250'
+                    },
+                    {
+                        detail : {
+                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
+                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
+                        },
+                        quantity : {
+                            amount : '500000000',
+                            unit : 'ถุง'
+                        },
+                        pricePerUnit : '1250'
+                    },
+                    {
+                        detail : {
+                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
+                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ าหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
+                        },
+                        quantity : {
+                            amount : '500000000',
+                            unit : 'ถุง'
+                        },
+                        pricePerUnit : '1250'
+                    },
                 ]
             },
             total : {
-                letter : 'ห้าหมื่นเก้าพันบาท',
                 digit : {
                     noTax : {
                         total : '59000 บาท',
@@ -108,34 +159,11 @@ var quotation = function(data, size) {
             },
             note : {
                 description : 'อ้ย โปรดักชั่นอาร์พีจีบาบูน อุปทานครัวซองทีวี เอาต์ แรงใจ เอาท์อาร์พีจีพอเพียง พะเรอแหววสเก็ตช์ต่อยอดสตรอว์เบอร์รี ธัมโมพงษ์ลาตินบ๊วยว้อดก้า มะกัน กีวี โอวัลตินไมเกรนแดนซ์ล็อบบี้สปอต แซนด์วิชไหร่ อุปัทวเหตุวิลเลจสะเด่าซินโดรม สกาย ﻿กรรมาชนตุ๊กตุ๊กราสเบอร์รีสต๊อคออกแบบ วอลซ์เกมส์ไวกิ้งโชห่วยน็อค'
-            },
-            signature : {
-                buyer : {
-                    signature : '',
-                    date : ''
-                },
-                seller : {
-                    shop : {
-                        name : ''
-                    },
-                    owner : {
-                        signature : '',
-                        date : ''
-                    }
-                }
-            }
-        },
-        footer : {
-            page : {
-                number : ''
-            },
-            logo : {
-                name : ''
             }
         }
     };
 
-    // Data with Label Part --
+    // จับคู่ข้อมูล ให้เข้าเป็น Pattern ที่ระบบต้องการ
     this.dataMap = {
         header : {
             location : {
@@ -222,7 +250,7 @@ var quotation = function(data, size) {
                 orderList : function() {
                     var newOrder = [];
                     var i = 1;
-                    this.data.body.order.orderList.forEach(function(order) {
+                    self.data.body.order.orderList.forEach(function(order) {
                         newOrder.push({
                             no : { text : i.toString() },
                             detail : {
@@ -241,7 +269,7 @@ var quotation = function(data, size) {
                 }()
             },
             total : {
-                letter : { text : this.data.body.total.letter },
+                letter : { text : '(' + utilW.thaiTextMoney(this.data.body.total.digit.noTax.finalTotal) + ')' }, // แปลงค่าเงินในหน่วยตัวเลข เป็นตัวอักษรภาษาไทย
                 digit : {
                     noTax : {
                         total : { 
@@ -261,7 +289,7 @@ var quotation = function(data, size) {
                             value : { text : this.data.body.total.digit.noTax.finalTotal }
                          },
                     },
-                    withTax : {
+                    withTax : { // ลบไม้ได้ แต่ปล่อย object ให้ว่างได้ { }
                         deductTax : { 
                             label : { text : 'หักภาษี ณ ที่จ่าย', style : 'quo_label_color' },
                             value : { text: this.data.body.total.digit.withTax.deductTax }
@@ -283,28 +311,24 @@ var quotation = function(data, size) {
                 buyer : {
                     signature : { 
                         label : { text : 'ผู้สั่งซื้อสินค้า' },
-                        value : { text : this.data.body.signature.buyer.signature }
                      },
                     date : { 
                         label : { text : 'วันที่' },
-                        value : { text : this.data.body.signature.buyer.date }
                      }
                 },
                 seller : {
                     shop : {
                         name : { 
                             label : { text : 'ในนาม' },
-                            value : { text : this.data.body.signature.seller.shop.name }
+                            value : { text : this.data.header.location.shop.name }
                          }
                     },
                     owner : {
                         signature : { 
                             label : { text : 'ผู้อนุมัติ' },
-                            value : { text : this.data.body.signature.seller.owner.signature }
                          },
                         date : { 
                             label : { text : 'วันที่' },
-                            value : { text : this.data.body.signature.seller.owner.date }
                          }
                     }
                 }
@@ -314,285 +338,126 @@ var quotation = function(data, size) {
             page : {
                 number : { 
                     label : { text : 'หน้าที่' },
-                    value : { text : this.data.footer.page.number }
-                 }
-            },
-            logo : {
-                name : { 
-                    label : { text : 'เราใช้' },
-                    value : { text : this.data.footer.logo.name }
-                 }
+                }
             }
          }
     };
 
-    // Size Part --
+    // กำหนดขนาดของแต่ละส่วน ในเอกสาร
+    // * หมายถึง auto
+    // อ้างอิงขนาดเอกสารได้จาก zpringSize
     this.size = {
         header : {
             location : {
-                width: function() { return 300; } 
+                width: 200
             },
             doc : {
-                width: function() { return 220; },
+                width: 220,
                 label: {
-                    width: function() { return 80; }
+                    width: 70
                 },
                 value : {
-                    width: function() { return 120; }
+                    width: 150
                 }
             },
             blank : {
-                width : function() {
-                    return '*';
-                }
+                width : '*'
             }
         },
         body : {
             order : {
                 no : {
-                    width: function() { 
-                        return 10;
-                    }
+                    width: 10
                 },
                 detail : {
-                    width: function() {
-                        return 250;
-                    }
+                    width: 250
                 },
                 quantity : {
-                    width: function() {
-                        return '*';
-                    }
+                    width: '*'
                 },
                 pricePerUnit : {
-                    width: function() {
-                        return '*';
-                    }
+                    width: '*'
                 },
                 totalPrice : {
-                    width : function() {
-                        return '*';
-                    }
+                    width : '*'
                 }
             },
             total : {
                letter : {
-                   width : function() {
-                       return zpringSize.page.pageSizePoint.width - self.size.body.total.digit.width();
-                   }
+                   width : '*'
                },
                digit : {
-                    width : function() {
-                        return 220;
-                    },
+                    width : 220,
                     label : {
-                        width: function() {
-                            return self.size.body.total.digit.width() - self.size.body.total.digit.value.width() - 20;
-                        }
+                        width: 140
                     },
                     value : {
-                        width : function() { return 80; }
+                        width : 80
                     }
                }
+            },
+            note : {
+                width: zpringSize.page.pageSizePoint.width
             },
             signature : {
                 buyer : {
                     signature : {
-                        width : function() {
-                            return 75;
-                        }
+                        width: 75
                     },
                     date : {
-                        width : function() {
-                            return 75;
-                        }
+                        width: 75
                     }
                 },
                 seller : {
                     signature : {
-                        width : function() {
-                            return 75;
-                        }
+                        width: 75
                     },
                     date : {
-                        width : function() {
-                            return 75;
-                        }
+                        width: 75
                     }
                 },
                 blank : {
-                    width : function() {
-                        return '*';
-                    }
+                    width: '*'
                 }
             }
-        }      
+        },
+        footer : {}      
     };
 
+    // เมื่อสร้างเอกสาร จะทำการ Load Font เข้าสู่ canvas 
+    // เมื่อทำการโหลดเสร็จ จะทำการ สร้าง Layout เอกสารแล้ว ส่งคืนให้เป็น Promise
+    return new Promise(function(resolve, reject) {
+        utilB.loadFont(self.typeface).then(function() {
 
+            self.layout = {}; 
 
-    // Layout Part --
-    this.layout = {};
+            // สร้าง Header
+            self.layout.header = utilW.header(self.size.header, self.dataMap.header, self.font);
 
-    /////////////////
-    this.layout.header = {
-        columns: [
-                { 
-                    width: this.size.header.location.width(),
-                    stack :  [
-                            this.dataMap.header.location.shop.name,
-                            this.dataMap.header.location.shop.address,
-                            textDataWithLabel(this.dataMap.header.location.shop.mobilePhone),
-                            textDataWithLabel(this.dataMap.header.location.shop.telePhone),
-                            textDataWithLabel(this.dataMap.header.location.shop.fax),
-                            oneLineToMutilple(this.dataMap.header.location.shop.website, this.size.header.location.width(), this.font, -80),
-                            textDataWithLabel(this.dataMap.header.location.shop.taxNumber),
-                            ' ',
-                            this.dataMap.header.location.seller.label,
-                            this.dataMap.header.location.seller.name,
-                            this.dataMap.header.location.seller.address,
-                            textDataWithLabel(this.dataMap.header.location.seller.taxNumber)
-                    ]
-                },
-				{
-                    width: this.size.header.blank.width(),
-                    text : ' '
-                },
-				{
-					width: this.size.header.doc.width() ,
-                    stack : [
-                        this.dataMap.header.doc.label,
-                        {
-                            table: {    
-                                    widths: [ this.size.header.doc.label.width(), this.size.header.doc.value.width() ],
-                                    body: [
-                                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
-                                            textTableDataWithLabel(this.dataMap.header.doc.part1.docNo),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part1.date),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part1.sellerName),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part1.quote),
-                                            [hrLine(this.size.header.doc.width(), { margin: [0, 10], colSpan: 2 }), {}],
-                                            textTableDataWithLabel(this.dataMap.header.doc.part2.workName),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part2.contactName),
-                                            textTableDataWithLabel(this.dataMap.header.doc.part2.mobilePhone),
-                                            textTableDataMulWithLabel(this.dataMap.header.doc.part2.email, this.size.header.doc.width(), this.font, -80)
-                                    ]
-                            },
-                            layout: {
-                                hLineColor: function() {
-                                    return 'white';
-                                },
-                                vLineColor: function(){
-                                    return 'white';
-                                },
-                                paddingTop: function() {
-                                    return 0;
-                                },
-                                paddingBottom: function() {
-                                    return 0;
-                                } 
-                            }
-                        },
-                    
-                    ]
-				}
-			]
-    };
+            // สร้าง Footer
+            // เป็น Function ที่ PDFMake จะไป call โดยจะส่ง currentPage, totalPage มาให้เรา
+            self.layout.footer = function(currentPage, totalPage) {
+                return utilW.footer(self.size.footer, self.dataMap.footer, self.font, currentPage, totalPage);
+            };
+            // เรียกฟังก์ชันสร้าง Footer ขึ้นมา เพื่อที่จะคำนวนขอบล่างกระดาษ ก่อน
+            utilW.footer(self.size.footer, self.dataMap.footer, self.font, '1', '1');
+           
+            // สร้าง ตาราง Order
+            self.layout.body = utilW.orderTable(self.size.body.order, self.dataMap.body.order.label, self.dataMap.body.order.orderList, self.font, self.layout.header, self.size.footer.height);
 
-    /////////////////
-     this.layout.body =  [
-         {
-             stack : [
-                         this.layout.header,
-                         ' ',
-                         createOrderTable([this.size.body.order.no.width(), this.size.body.order.detail.width(), this.size.body.order.quantity.width(), this.size.body.order.pricePerUnit.width(), this.size.body.order.totalPrice.width()], this.dataMap.body.order.label, this.dataMap.body.order.orderList, this.font, 120),
-                     ]
+            // สร้างตาราง สรุปยอด
+            self.layout.body = self.layout.body.concat(utilW.total(self.size.body.total, self.dataMap.body.total, self.font, self.layout.body, self.size.footer.height));
             
-         },
-         ' ',
-        { 
-              pageBreak : 'before',
-              columns : [
-                 {
-                     width : this.size.body.total.letter.width(),
-                     text : ''
-                 },
-                 {
-                     width : this.size.body.total.digit.width(),
-                     stack : [
-                         {
-                            table : {
-                                widths : [this.size.body.total.digit.label.width(), this.size.body.total.digit.value.width()],
-                                body: [
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.total),
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.discount),
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.afterDiscount),
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.noTax.finalTotal),
-                                    [hrLine(this.size.body.total.digit.width(), { margin: [0, 10], colSpan: 2 }), {}],
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.withTax.deductTax),
-                                    textTableDataWithLabel(this.dataMap.body.total.digit.withTax.finalTotal)
-                                ]
-                            },
-                            alignment: 'right',
-                            layout : {
-                                hLineColor: function() {
-                                    return 'white';
-                                },
-                                vLineColor: function() {
-                                    return 'white';
-                                },
-                                paddingTop: function() {
-                                    return 0;
-                                },
-                                paddingBottom: function() {
-                                    return 0;
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-         },
-         this.dataMap.body.note.description.label,
-         this.dataMap.body.note.description.value,
-         ' ',
-         ' ',
-         ' ',
-         {
-            table : {
-                widths : [this.size.body.signature.buyer.signature.width(),this.size.body.signature.buyer.date.width(),
-                this.size.body.signature.blank.width(), this.size.body.signature.seller.signature.width(),this.size.body.signature.seller.date.width()],
+            // สร้าง กล่องหมายเหตุ
+            self.layout.body = self.layout.body.concat(utilW.note(self.size.body.note, self.dataMap.body.note, self.font, self.layout.body, self.size.footer.height));
 
-                body: [
-                    [
-                        hrLine(this.size.body.signature.buyer.signature.width()),
-                        hrLine(this.size.body.signature.buyer.date.width()),
-                        '',
-                        hrLine(this.size.body.signature.seller.signature.width()),
-                        hrLine(this.size.body.signature.seller.date.width())
-                    ],
-                    [
-                        this.dataMap.body.signature.buyer.signature.label,
-                        this.dataMap.body.signature.buyer.date.label,
-                        '',
-                        this.dataMap.body.signature.seller.owner.signature.label,
-                        this.dataMap.body.signature.seller.owner.date.label
-                    ]
-                ]
-            },
-            alignment : 'center',
-            layout : 'noBorders'
-         }
-    ]
+            // สร้างช่องลายเซนต์
+            self.layout.body= self.layout.body.concat(utilW.signature(self.size.body.signature, self.dataMap.body.signature, self.font, self.layout.body, self.size.footer.height));
 
+            // แจ้ง Promise ว่าทำเสร็จหมดแล้ว
+            resolve(self);
 
-    /////////////////
-    this.layout.footer = function(currentPage, totalPage) {
-        var text = 'หน้าที่ ' + currentPage + ' / ' + totalPage;
-        return  {text : text, height: paragraphHeight(sentenceToArray(text, zpringSize.page.pageSizePoint.width, this.font.canvasFont())), margin: [zpringSize.page.pageMargin.left, 0, zpringSize.page.pageMargin.right, 0]};
-    };
+        });
+    });
 
-    this.layout.font = this.font;
-
-    return this.layout;
 };
