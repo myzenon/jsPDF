@@ -1,7 +1,8 @@
 var quotation = function(data, size) {
 
     // Data parameter สำหรับใส่ข้อมูลที่จะรับเข้ามา
-    // Size parameter สำหรับการกำหนด ขนาดของ กระดาษ [ ยังไม่ได้ทำ ]
+    // Size parameter สำหรับการกำหนด ขนาดของ กระดาษ
+    this.page = zpringSize.page[size];
 
     var self = this;
 
@@ -62,7 +63,10 @@ var quotation = function(data, size) {
                             amount : '500000000',
                             unit : 'ถุง'
                         },
-                        pricePerUnit : '1250'
+                        price : {
+                            unit : '1250',
+                            total : '5000'
+                        }
                     },
                     {
                         detail : {
@@ -73,74 +77,11 @@ var quotation = function(data, size) {
                             amount : '100',
                             unit : 'กก.'
                         },
-                        pricePerUnit : '59'
-                    },
-                    {
-                        detail : {
-                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
-                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
-                        },
-                        quantity : {
-                            amount : '100',
-                            unit : 'เครื่อง'
-                        },
-                        pricePerUnit : '59'
-                    },
-                    {
-                        detail : {
-                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
-                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
-                        },
-                        quantity : {
-                            amount : '100',
-                            unit : 'กก.'
-                        },
-                        pricePerUnit : '59'
-                    },
-                    {
-                        detail : {
-                            name : 'ซีเรียสบัตเตอร์แรลลีอิมพีเรียลพรีเมียม เย้วโค้ชไรเฟิลแชเชือน น็อกเป่ายิ้งฉุบ ม้ง วอร์รูมชัตเตอร์สคริปต์บิ๊ก แหววโหงวเฮ้งวิลเลจ ตู้เซฟไทเฮาเทรลเล่อร์ไบเบิล แฟ้บเฮีย ง่าวสปอตอริยสงฆ์มหาอุปราชา',
-                            description : 'โรแมนติกเปโซไฮเอนด์ คอร์สรองรับแฟรี มาร์ค เยนแซนด์วิช อุรังคธาตุนายแบบซูม ฟาสต์ฟู้ดมาม่า วานิลาแจ็กพอตโกเต็กซ์สังโฆชินบัญชร กิฟท์เอสเปรสโซคลับโอวัลติน ติวเตอร์ดราม่าเอสเพรสโซตอกย้ำคอมเมนท์ เอสเพรสโซแพทยสภาเบลอแตงโม เวิร์กช็อปคอร์รัปชันลิมูซีน โยโย่ ดิกชันนารีอัตลักษณ์วัจนะแมมโบ้ลิมูซีน เซ่นไหว้พอเพียง เซี้ยวสแตนดาร์ดโกะซูโม่ เวอร์ไชน่า'
-                        },
-                        quantity : {
-                            amount : '100',
-                            unit : 'เครื่อง'
-                        },
-                        pricePerUnit : '59'
-                    },
-                    {
-                        detail : {
-                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
-                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
-                        },
-                        quantity : {
-                            amount : '500000000',
-                            unit : 'ถุง'
-                        },
-                        pricePerUnit : '1250'
-                    },
-                    {
-                        detail : {
-                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
-                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
-                        },
-                        quantity : {
-                            amount : '500000000',
-                            unit : 'ถุง'
-                        },
-                        pricePerUnit : '1250'
-                    },
-                    {
-                        detail : {
-                            name : 'Jerhigh Meat as Meals อาหารเม็ดเนื้อนุ่ม เจอร์ไฮ รสเนื้อวัว 500กรัม (6ถุง)',
-                            description : 'อาหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ าหารเม็ดเนื้อนุ่ม เกรดซุปเปอร์พรีเมี่ยมมีสัดส่วนเนื้อในปริมาณสูง ครบคุณค่าทางโภชนาการระดับ โฮลิสติกมีส่วนประกอบของสารอาหารที่เป็นประโยชน์ต่อสุนัข เช่น กลูโคซามีน และคอนดรยติน ซึ่งเป็นสารอาหารจำเป็นต่อการสร้างกระดูกอ่อนและเสริมน้ำเลี้ยงบริเวณข้อต่อ ,เบต้ากลูแคน ที่ช่วยเสริมภูมิคุ้มกันในร่างกาย และที่สำคัญ แร่ลิโมไนซ์ ที่ช่วยดูดซับกลิ่นมูลของสุนัขได้ถึง 80%เหมาะกับสุนัขทุกสายพันธุ์ และโดยเฉพาะสุนัขที่ทานยาก'
-                        },
-                        quantity : {
-                            amount : '500000000',
-                            unit : 'ถุง'
-                        },
-                        pricePerUnit : '1250'
-                    },
+                        price : {
+                            unit : '59',
+                            total : '50900.4678'
+                        }
+                    }
                 ]
             },
             total : {
@@ -261,7 +202,10 @@ var quotation = function(data, size) {
                                 amount : { text : order.quantity.amount },
                                 unit : { text : order.quantity.unit }
                             },
-                            pricePerUnit : { text : order.pricePerUnit }
+                            price : {
+                                unit : { text : order.price.unit },
+                                total : { text : order.price.total }
+                            }
                         });
                         i++;
                     });
@@ -397,7 +341,7 @@ var quotation = function(data, size) {
                }
             },
             note : {
-                width: zpringSize.page.pageSizePoint.width
+                width: zpringSize.page[size].pageSizePoint.width
             },
             signature : {
                 buyer : {
@@ -421,7 +365,16 @@ var quotation = function(data, size) {
                 }
             }
         },
-        footer : {}      
+        footer : {
+            height : 0
+        }      
+    };
+
+    // กำหนดรูปร่าง Layout
+    this.layout = {
+        header : '',
+        body : '',
+        footer : ''
     };
 
     // เมื่อสร้างเอกสาร จะทำการ Load Font เข้าสู่ canvas 
@@ -429,30 +382,30 @@ var quotation = function(data, size) {
     return new Promise(function(resolve, reject) {
         utilB.loadFont(self.typeface).then(function() {
 
-            self.layout = {}; 
+            if(size === 'A4') {
+                // สร้าง Header
+                self.layout.header = utilW.header_a4(self.size.header, self.dataMap.header, self.font);
 
-            // สร้าง Header
-            self.layout.header = utilW.header(self.size.header, self.dataMap.header, self.font);
-
-            // สร้าง Footer
-            // เป็น Function ที่ PDFMake จะไป call โดยจะส่ง currentPage, totalPage มาให้เรา
-            self.layout.footer = function(currentPage, totalPage) {
-                return utilW.footer(self.size.footer, self.dataMap.footer, self.font, currentPage, totalPage);
-            };
-            // เรียกฟังก์ชันสร้าง Footer ขึ้นมา เพื่อที่จะคำนวนขอบล่างกระดาษ ก่อน
-            utilW.footer(self.size.footer, self.dataMap.footer, self.font, '1', '1');
-           
-            // สร้าง ตาราง Order
-            self.layout.body = utilW.orderTable(self.size.body.order, self.dataMap.body.order.label, self.dataMap.body.order.orderList, self.font, self.layout.header, self.size.footer.height);
-
-            // สร้างตาราง สรุปยอด
-            self.layout.body = self.layout.body.concat(utilW.total(self.size.body.total, self.dataMap.body.total, self.font, self.layout.body, self.size.footer.height));
+                // สร้าง Footer
+                // เป็น Function ที่ PDFMake จะไป call โดยจะส่ง currentPage, totalPage มาให้เรา
+                self.layout.footer = function(currentPage, totalPage) {
+                    return utilW.footer_a4(self.size.footer, self.dataMap.footer, self.font, currentPage, totalPage);
+                };
+                // เรียกฟังก์ชันสร้าง Footer ขึ้นมา เพื่อที่จะคำนวนขอบล่างกระดาษ ก่อน
+                utilW.footer_a4(self.size.footer, self.dataMap.footer, self.font, '1', '1');
             
-            // สร้าง กล่องหมายเหตุ
-            self.layout.body = self.layout.body.concat(utilW.note(self.size.body.note, self.dataMap.body.note, self.font, self.layout.body, self.size.footer.height));
+                // สร้าง ตาราง Order
+                self.layout.body = utilW.orderTable_a4(self.size.body.order, self.dataMap.body.order.label, self.dataMap.body.order.orderList, self.font, self.layout.header, self.size.footer.height);
 
-            // สร้างช่องลายเซนต์
-            self.layout.body= self.layout.body.concat(utilW.signature(self.size.body.signature, self.dataMap.body.signature, self.font, self.layout.body, self.size.footer.height));
+                // สร้างตาราง สรุปยอด
+                self.layout.body = self.layout.body.concat(utilW.total_a4(self.size.body.total, self.dataMap.body.total, self.font, self.layout.body, self.size.footer.height));
+                
+                // สร้าง กล่องหมายเหตุ
+                self.layout.body = self.layout.body.concat(utilW.note_a4(self.size.body.note, self.dataMap.body.note, self.font, self.layout.body, self.size.footer.height));
+
+                // สร้างช่องลายเซนต์
+                self.layout.body= self.layout.body.concat(utilW.signature_a4(self.size.body.signature, self.dataMap.body.signature, self.font, self.layout.body, self.size.footer.height));
+            }
 
             // แจ้ง Promise ว่าทำเสร็จหมดแล้ว
             resolve(self);

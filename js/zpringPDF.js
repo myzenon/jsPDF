@@ -1,8 +1,8 @@
 var data = null; // จำลองตัวแปรข้อมูล
-var size = null; // จำลองตัวแปรขนาด
+var size = '80m'; // จำลองตัวแปรขนาด
 
-// เรียก factory ออกมาสร้างเอกสารให้ โดยระบุชนิดเอกสาร, ข้อมูล และขนาด [ขนาดยังไม่ได้ใช้ ณ ขณะนี้]
-zpringFactory('quotation', data, size).then(function(jsDoc) {
+// เรียก factory ออกมาสร้างเอกสารให้ โดยระบุชนิดเอกสาร, ข้อมูล และขนาดเอกสาร [A4, 58m]
+zpringFactory('receipt', data, size).then(function(jsDoc) {
 
     // ทำการ Map ระหว่างข้อมูลในเอกสาร กับระบบ PDFMake
     var docDefinition = {
@@ -14,8 +14,8 @@ zpringFactory('quotation', data, size).then(function(jsDoc) {
             font: jsDoc.typeface.name,
             fontSize : jsDoc.font.size, 
         },
-        pageSize: zpringSize.page.pageSize,
-        pageMargins: [ zpringSize.page.pageMargin.left, zpringSize.page.pageMargin.top, zpringSize.page.pageMargin.right, jsDoc.size.footer.height] // [Left, Top, Right , Bottom] หรือ [Horizontal, Vertical]
+        pageSize: jsDoc.page.pageSize,
+        pageMargins: [ jsDoc.page.pageMargin.left, jsDoc.page.pageMargin.top, jsDoc.page.pageMargin.right, jsDoc.size.footer.height] // [Left, Top, Right , Bottom] หรือ [Horizontal, Vertical]
     };
 
     // สร้าง PDF ลงใน iFrame

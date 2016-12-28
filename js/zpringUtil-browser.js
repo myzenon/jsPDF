@@ -21,7 +21,6 @@ var utilB = {
     },
     // คำนวณขนาดตัวอักษร โดยใช้ canvas
     "textSize": function(text, fontCanvas) {
-        
         var canvas = canvasInstance;
         var context = canvas.getContext("2d");
         context.font = fontCanvas;
@@ -121,4 +120,32 @@ var utilB = {
         }
         return sentenceArray;
     },
+    "charCut" : function(char, widthPoint, fontCanvas) {
+        // widthPoint -= 15; // ลบ 5 เนื่องจากความคลาดเคลื่อน
+        var charArray = char.split('');
+        var sentenceTemp = '';
+        var sentenceObject = {};
+        for(var indexofChar = 0; indexofChar < charArray.length; indexofChar++) {
+            if(utilB.textSize(sentenceTemp + charArray[indexofChar], fontCanvas).width > widthPoint) {
+                sentenceObject = utilB.textSize(sentenceTemp, fontCanvas);
+                sentenceObject.text = sentenceTemp;
+                break;
+            }
+            sentenceTemp += charArray[indexofChar];
+            if((indexofChar + 1) === charArray.length) {
+                sentenceObject = utilB.textSize(sentenceTemp, fontCanvas);
+                sentenceObject.text = sentenceTemp;
+            }
+        }
+        return sentenceObject;
+    },
+    "imageSize" : function(base64) {
+        return new Promise(function(resolve, reject) {
+            var img = new Image();
+            img.src = base64;
+            img.onload = function(){
+                resolve({ width : img.width, height : img.height });
+            };
+        });
+    }
 };

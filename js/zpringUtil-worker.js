@@ -70,14 +70,14 @@ var utilW = {
                 return i;
             }
         }
-        return -1;
+        return 0;
     },
 
-    // เพิ่ม Object ข้อมูล ลงในเอกสาร
-    "addToPage" : function(object, nowHeight, body, footerHeight) {
+    // เพิ่ม Object ข้อมูล ลงในเอกสาร สำหรับขนาด A4
+    "addToPage_a4" : function(object, nowHeight, body, footerHeight) {
         var objectArray = [];
         var headerPageIndex = utilW.findHeaderPage(body); // หาหัวกระดาษ
-        var pageRemainHeight = zpringSize.page.pageSizePoint.height - footerHeight; // คำนวนขนาดพื้นที่ที่เหลือ
+        var pageRemainHeight = zpringSize.page['A4'].pageSizePoint.height - footerHeight; // คำนวนขนาดพื้นที่ที่เหลือ
 
         // ลบขนาดที่เหลือ กับ Object ที่มีอยู่แล้วในกระดาษ
         for(var i = headerPageIndex; i < body.length; i++) {
@@ -171,10 +171,10 @@ var utilW = {
         return lineData;
     },
 
-    // *********************** Function หมวดสร้าง Layout ที่ใช้ใน PDFMake *********************** //
+    // *********************** Function หมวดสร้าง Layout ที่ใช้ใน PDFMake สำหรับขนาด A4 *********************** //
 
     // ฟังก์ชั่นใช้สำหรับสร้าง Header ในระบบเอกสาร A4
-    "header" : function(size, data, font) {
+    "header_a4" : function(size, data, font) {
         var headerObject = {
             columns : [
                 {
@@ -336,7 +336,7 @@ var utilW = {
     
 
     // ฟังก์ชั่นใช้สำหรับสร้างตาราง Order ขนาด A4
-    "orderTable" : function(size, label, data, font, header, footerHeight) {
+    "orderTable_a4" : function(size, label, data, font, header, footerHeight) {
       
         // สร้าง Object ของ Table
         var tableObject = {
@@ -362,10 +362,9 @@ var utilW = {
         data.forEach(function(data) {
             data.no.alignment = 'center';
             var quantity = {text : [data.quantity.amount, ' ', data.quantity.unit], alignment : 'center'};
-            data.pricePerUnit.text = parseFloat(data.pricePerUnit.text).toFixed(2);
-            data.pricePerUnit.alignment = 'right';
-            var totalPrice = (data.pricePerUnit.text * data.quantity.amount.text).toString();
-            totalPrice = { text: parseFloat(totalPrice).toFixed(2), alignment : 'right' };
+            data.price.unit.text = parseFloat(data.price.unit.text).toFixed(2);
+            data.price.unit.alignment = 'right';
+            data.price.total = { text: parseFloat(data.price.total.text).toFixed(2), alignment : 'right' };
             orderList.push([
                 data.no, 
                 {
@@ -376,8 +375,8 @@ var utilW = {
                     alignment : 'left'
                 },
                 quantity,
-                data.pricePerUnit,
-                totalPrice
+                data.price.unit,
+                data.price.total
             ]);
         });
 
@@ -394,7 +393,7 @@ var utilW = {
 
 
         // คำนวนความสูงของหน้า
-        var bodyHeight = zpringSize.page.pageSizePoint.height - header.cal_height - footerHeight;
+        var bodyHeight = zpringSize.page['A4'].pageSizePoint.height - header.cal_height - footerHeight;
         var tableObjectArray = [];
         var tableTemp = utilW.cloneObject(tableObject);
         // ใส่ Order ไปในแต่ละหน้า ให้สัมพันธ์กบความสูงที่เหลือ
@@ -438,7 +437,7 @@ var utilW = {
     },
 
     // ฟังก์ชั่นใช้สำหรับสร้าง ตารางสรุปยอดเงิน สำหรับขนาด A4
-    "total" : function(size, data, font, body, footerHeight) {
+    "total_a4" : function(size, data, font, body, footerHeight) {
         // สร้าง Object ที่เป็น column
         var totalObject = {
             columns : [
@@ -504,11 +503,11 @@ var utilW = {
         totalHeight += totalObject.margin[1]; // บวกระยะห่างของ ตารางลงไปด้วย
         totalObject.cal_height = totalHeight;
         
-        return utilW.addToPage(totalObject, totalHeight, body, footerHeight); // นำข้อมูลที่เสร็จแล้วลงไปใน Body
+        return utilW.addToPage_a4(totalObject, totalHeight, body, footerHeight); // นำข้อมูลที่เสร็จแล้วลงไปใน Body
     },
 
     // ฟังก์ชั่นใช้สำหรับสร้าง ตารางหมายเหตุ สำหรับขนาด A4
-    "note" : function(size, data, font, body, footerHeight) {
+    "note_a4" : function(size, data, font, body, footerHeight) {
         // สร้าง Object ของหมายเหตุ
         var noteObject = {};
         noteObject.margin = [0, 10]; // กำหนดระยะห่าง ของตาราง
@@ -529,11 +528,11 @@ var utilW = {
         noteHeight += noteObject.margin[1]; // บวกระยะห่างของ ตารางลงไปด้วย
         noteObject.cal_height = noteHeight;
 
-        return utilW.addToPage(noteObject, noteHeight, body, footerHeight);  // นำข้อมูลที่เสร็จแล้วลงไปใน Body
+        return utilW.addToPage_a4(noteObject, noteHeight, body, footerHeight);  // นำข้อมูลที่เสร็จแล้วลงไปใน Body
     },
 
     // ฟังก์ชั่นใช้สำหรับสร้างตาราง ลายเซนต์ ในระบบเอกสาร A4
-    "signature" : function(size, data, font, body, footerHeight) {
+    "signature_a4" : function(size, data, font, body, footerHeight) {
         // สร้างตารางของลายเซนต์
         var signatureObject = {
             table : {
@@ -593,7 +592,7 @@ var utilW = {
         // ทำการเพิ่ม Object ของลายเซนต์ลงใน body
         var signatureObjectArray = [];
         var headerPageIndex = utilW.findHeaderPage(body);
-        var pageRemainHeight = zpringSize.page.pageSizePoint.height - footerHeight;
+        var pageRemainHeight = zpringSize.page['A4'].pageSizePoint.height - footerHeight;
 
         // คำนวนความสูงของ Object ทั้งหมดในเอกสารตอนนี้
         for(var i = headerPageIndex; i < body.length; i++) {
@@ -608,7 +607,7 @@ var utilW = {
             var newHeader = utilW.cloneObject(body[headerPageIndex]);
             newHeader.pageBreak = 'before';
             signatureObjectArray.push(newHeader);
-            space = zpringSize.page.pageSizePoint.height - footerHeight - newHeader.cal_height - signatureHeight; // สูตรที่ใช้คำนวนเพื่อให้ ช่องเซนต์อยู่ล่างสุดของกระดาษ
+            space = zpringSize.page['A4'].pageSizePoint.height - footerHeight - newHeader.cal_height - signatureHeight; // สูตรที่ใช้คำนวนเพื่อให้ ช่องเซนต์อยู่ล่างสุดของกระดาษ
         }
         else {
             space = pageRemainHeight - signatureHeight - 10; // สูตรที่ใช้คำนวนเพื่อให้ ช่องเซนต์อยู่ล่างสุดของกระดาษ
@@ -621,12 +620,164 @@ var utilW = {
     },
 
     // ฟังก์ชั่นใช้สำหรับสร้าง Footer สำหรับขนาด A4
-    "footer" : function(size, data, font, currentPage, totalPage) {
+    "footer_a4" : function(size, data, font, currentPage, totalPage) {
         data.page.number.value = { text : currentPage + ' / ' + totalPage }; // สร้างตัวหนังสือบอกจำนวนหน้า
         var footerHeight = utilW.fontHeight(font.size); // กำหนดความสูงของ Footer ให้เท่ากับขนาดตัวหนังสือปกติ
         var footerObject = utilW.pat_add_label(data.page.number); // Map ข้อมูลกับ Label
-        size.height = zpringSize.page.pageMargin.bottom + footerHeight; // กำหนดความสูงของ Footer ทั้งหมด ให้เท่ากับระยะขอบกระดาษ บวกความสูงของ Footer
-        footerObject.margin = [zpringSize.page.pageMargin.left, 0, zpringSize.page.pageMargin.right, zpringSize.page.pageMargin.bottom]; // กำหนดระยะขอบของ Footer [Footer จะไม่อิงระยะตาม ระบบกระดาษปกติ ต้องกำหนดแยก !!]
+        size.height = zpringSize.page['A4'].pageMargin.bottom + footerHeight; // กำหนดความสูงของ Footer ทั้งหมด ให้เท่ากับระยะขอบกระดาษ บวกความสูงของ Footer
+        footerObject.margin = [zpringSize.page['A4'].pageMargin.left, 0, zpringSize.page['A4'].pageMargin.right, zpringSize.page['A4'].pageMargin.bottom]; // กำหนดระยะขอบของ Footer [Footer จะไม่อิงระยะตาม ระบบกระดาษปกติ ต้องกำหนดแยก !!]
+        return footerObject;
+    },
+
+    // *********************** Function หมวดสร้าง Layout ที่ใช้ใน PDFMake สำหรับขนาด 80m *********************** //
+    
+    "header_80m" : function(size, data, font) {
+
+        var headObject = {
+            columns : [],
+            alignment : 'center'
+        };
+
+        data.head.logo.width = size.head.logo.width;
+        headObject.columns.push(data.head.logo);
+
+        var headDetail = { stack : [] };
+        headDetail.width = size.head.detail.width;
+        headDetail.stack.push(data.head.detail.label);
+        headDetail.stack.push(utilW.pat_add_label(data.head.detail.receiptTaxID));
+        headObject.columns.push(headDetail);
+
+        var headDetailHeight = 0;
+        headDetailHeight += utilW.fontHeight(font.size);
+        headDetailHeight += utilW.fontHeight(font.size);
+
+        if(headDetailHeight < size.head.logo.height) {
+            headDetail.margin = [0, (size.head.logo.height - headDetailHeight) / 2];
+            headObject.cal_height = size.head.logo.height;
+        }
+        else {
+            data.head.logo.margin = [0, (headDetailHeight - size.head.logo.height) / 2];
+            headObject.cal_height = headDetailHeight;
+        }
+
+
+        var infoObject = {
+            columns : []
+        };
+
+        var company = { stack : [], cal_height : 0 };
+        company.width = size.info.company.width;
+        var companyName = utilB.textToArray(data.info.company.name.text, size.info.company.width, font.canvasFont());
+        company.stack.push(companyName);
+        company.stack.push(utilW.pat_add_label(data.info.company.taxID));
+
+        companyName.forEach(function(line) {
+            company.cal_height += line.height;
+        });
+        company.cal_height += utilW.fontHeight(font.size);
+
+
+        var receipt = { stack : [], cal_height : 0 };
+        receipt.width = size.info.receipt.width;
+        data.info.receipt.employee.value = utilB.charCut(data.info.receipt.employee.label.text + ' ' + data.info.receipt.employee.value.text, size.info.receipt.width, font.canvasFont());
+        receipt.stack.push(utilW.pat_add_label(data.info.receipt.posID));
+        receipt.stack.push(data.info.receipt.employee.value);
+        receipt.stack.push(utilW.pat_add_label(data.info.receipt.dateTime));
+
+        receipt.cal_height += utilW.fontHeight(font.size);
+        receipt.cal_height += utilW.fontHeight(font.size);
+        receipt.cal_height += utilW.fontHeight(font.size);
+
+        infoObject.cal_height = company.cal_height > receipt.cal_height ? company.cal_height : receipt.cal_height;
+
+        infoObject.columns.push(company);
+        infoObject.columns.push(receipt);
+
+        var headerArray = [];
+        headerArray.push(headObject);
+        headerArray.push(' ');
+        headerArray.push(infoObject);
+
+        var headerHeight = 0;
+        headerHeight += headObject.cal_height;
+        headerHeight += utilW.fontHeight(font.size);
+        headerHeight += infoObject.cal_height;
+
+        return { stack : headerArray, cal_height : headerHeight };
+    },
+
+    "orderTable_80m" : function(size, data, font)  {
+        var orderTableObject = {
+            table : {
+                widths : [size.detail.width, size.quantity.width, size.price.unit.width, size.price.total.width],
+                body : [
+                    [data.label.detail, data.label.quantity, data.label.price.unit, data.label.price.total]
+                ]
+            },
+            layout : {
+                vLineWidth : function() { return 0; },
+                hLineWidth : function() { return 0; },
+                paddingTop : function() { return 0; },
+                paddingBottom : function() { return 0; },
+                paddingLeft : function() { return 0; },
+                paddingRight : function() { return 0; }
+            },
+            cal_height : 0
+        };
+
+        data.orderList.forEach(function(order) {
+            order.detail.name = utilB.charCut(order.detail.name.text, size.detail.width, font.canvasFont());
+            orderTableObject.table.body.push([order.detail.name, order.quantity.amount, order.price.unit, order.price.total]);
+        });
+
+        orderTableObject.cal_height += utilW.fontHeight(font.size);
+        data.orderList.forEach(function(order) {
+            orderTableObject.cal_height += order.detail.name.height;
+        });
+
+        return orderTableObject;
+    },
+
+    "total_80m" : function(size, data, font) {
+        var totalObject = {
+            table : {
+                widths : [size.label.width, size.value.width],
+                body : []
+            },
+            layout : {
+                vLineWidth : function() { return 0; },
+                hLineWidth : function() { return 0; },
+                paddingTop : function() { return 0; },
+                paddingBottom : function() { return 0; },
+                paddingLeft : function() { return 20; },
+                paddingRight : function() { return 0; }
+            },
+            cal_height : 0
+        };
+
+        data.total.label.text = data.quantity.amount.text + ' ' + data.quantity.unit.text + '  ' + data.total.label.text;
+        for(var info in data) {
+            if(info === 'quantity') {
+                continue;
+            }
+            data[info].value.alignment = 'right';
+            totalObject.table.body.push(utilW.pat_add_label_table2c(data[info]));
+            totalObject.cal_height += utilW.fontHeight(font.size);
+        }
+
+        return totalObject;
+    },
+
+    "footer_80m" : function(width, data, font) {
+        var footerObject = { stack : [], cal_height : 0 }
+        data.text.split('\n').forEach(function(line) {
+            utilB.textToArray(line, width, font.canvasFont()).forEach(function(l) {
+                l.alignment = 'center';
+                footerObject.stack.push(l);
+                footerObject.cal_height += l.height;
+            });
+        });
+        
         return footerObject;
     }
 
