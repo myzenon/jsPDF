@@ -121,7 +121,7 @@ var utilB = {
         return sentenceArray;
     },
     "charCut" : function(char, widthPoint, fontCanvas) {
-        // widthPoint -= 15; // ลบ 5 เนื่องจากความคลาดเคลื่อน
+        widthPoint -= 5; // ลบ 5 เนื่องจากความคลาดเคลื่อน
         var charArray = char.split('');
         var sentenceTemp = '';
         var sentenceObject = {};

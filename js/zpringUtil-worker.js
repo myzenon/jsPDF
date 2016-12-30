@@ -171,6 +171,13 @@ var utilW = {
         return lineData;
     },
 
+    "spaceLine" : function(height) {
+        var lineData = { canvas : [] };
+        lineData.margin = [0, height / 2];
+        lineData.cal_height = height;
+        return lineData;
+    },
+
     // *********************** Function หมวดสร้าง Layout ที่ใช้ใน PDFMake สำหรับขนาด A4 *********************** //
 
     // ฟังก์ชั่นใช้สำหรับสร้าง Header ในระบบเอกสาร A4
@@ -631,26 +638,34 @@ var utilW = {
 
     // *********************** Function หมวดสร้าง Layout ที่ใช้ใน PDFMake สำหรับขนาด 80m *********************** //
     
+    // ฟังก์ชั่นใช้สำหรับสร้าง Header ขนาด 80m
     "header_80m" : function(size, data, font) {
 
+        // สร้าง Object ของ Header เป็นแบบ column
         var headObject = {
             columns : [],
             alignment : 'center'
         };
 
+        // กำหนดความกว้างของ Logo
         data.head.logo.width = size.head.logo.width;
         headObject.columns.push(data.head.logo);
 
+        // เพิ่มหัวกระดาษ
         var headDetail = { stack : [] };
         headDetail.width = size.head.detail.width;
         headDetail.stack.push(data.head.detail.label);
-        headDetail.stack.push(utilW.pat_add_label(data.head.detail.receiptTaxID));
+        headDetail.stack.push(data.head.detail.receiptTaxID.label);
+        headDetail.stack.push(data.head.detail.receiptTaxID.value);
         headObject.columns.push(headDetail);
 
+        // คำนวนความสูงของหัวกระดาษ
         var headDetailHeight = 0;
         headDetailHeight += utilW.fontHeight(font.size);
         headDetailHeight += utilW.fontHeight(font.size);
+        headDetailHeight += utilW.fontHeight(font.size);
 
+        // เช็คว่าขนาดโลโก้ กับหัวกระดาษ อะไรสูงกว่ากัน ถ้าสูงกว่าต้องเติม margin เพื่อให้มันอยู่ตรงกลาง / และกำหนด ความสูงของทั้งเซต เป็นตัวที่มากกว่านั้น
         if(headDetailHeight < size.head.logo.height) {
             headDetail.margin = [0, (size.head.logo.height - headDetailHeight) / 2];
             headObject.cal_height = size.head.logo.height;
@@ -660,52 +675,77 @@ var utilW = {
             headObject.cal_height = headDetailHeight;
         }
 
-
+        // สร้าง Object ของข้อมูล เป็น column
         var infoObject = {
             columns : []
         };
 
+        // Object ฝั่งข้อมูลบริษัท
         var company = { stack : [], cal_height : 0 };
         company.width = size.info.company.width;
         var companyName = utilB.textToArray(data.info.company.name.text, size.info.company.width, font.canvasFont());
         company.stack.push(companyName);
-        company.stack.push(utilW.pat_add_label(data.info.company.taxID));
+        company.stack.push(data.info.company.taxID.label);
+        company.stack.push(data.info.company.taxID.value);
 
+        // คำนวนความสูงของ ตาราง company
         companyName.forEach(function(line) {
-            company.cal_height += line.height;
+            company.cal_height += line.height; // ชื่อบริษัท
         });
-        company.cal_height += utilW.fontHeight(font.size);
-
-
+        company.cal_height += utilW.fontHeight(font.size); // เลขภาษี label
+        company.cal_height += utilW.fontHeight(font.size); // เลขภาษี value
+    
+        // Object ฝั่งข้อมูลใบเสร็จ
         var receipt = { stack : [], cal_height : 0 };
         receipt.width = size.info.receipt.width;
         data.info.receipt.employee.value = utilB.charCut(data.info.receipt.employee.label.text + ' ' + data.info.receipt.employee.value.text, size.info.receipt.width, font.canvasFont());
-        receipt.stack.push(utilW.pat_add_label(data.info.receipt.posID));
+        
+        // ถ้า POSID ยาวเกินขอบกระดาษ ให้ตั้งบรรทัดใหม่
+        if(utilB.textSize(data.info.receipt.posID.label.text + ' ' + data.info.receipt.posID.value.text, font.canvasFont()).width > size.info.receipt.width) {
+            receipt.stack.push(data.info.receipt.posID.label);
+            receipt.cal_height += utilW.fontHeight(font.size);
+            var posIDArray = utilB.textToArray(data.info.receipt.posID.value.text, size.info.receipt.width, font.canvasFont());
+            receipt.stack.push(posIDArray);
+            posIDArray.forEach(function(line) {
+                receipt.cal_height += line.height;
+            });
+        }
+        else {
+            receipt.stack.push(utilW.pat_add_label(data.info.receipt.posID));
+            receipt.cal_height += utilW.fontHeight(font.size);
+        }
+        
+        // ใส่ข้อมูล พนักงานและวันเวลา
         receipt.stack.push(data.info.receipt.employee.value);
-        receipt.stack.push(utilW.pat_add_label(data.info.receipt.dateTime));
+        receipt.stack.push(data.info.receipt.dateTime.value);
 
-        receipt.cal_height += utilW.fontHeight(font.size);
+        // เพิ่มความสูงของพนักงานและวันเวลา
         receipt.cal_height += utilW.fontHeight(font.size);
         receipt.cal_height += utilW.fontHeight(font.size);
 
+        // เลือกความสูง ของกรอบ info
         infoObject.cal_height = company.cal_height > receipt.cal_height ? company.cal_height : receipt.cal_height;
 
         infoObject.columns.push(company);
         infoObject.columns.push(receipt);
 
+        // เพิ่มข้อมูลงหัวกระดาษ
         var headerArray = [];
         headerArray.push(headObject);
-        headerArray.push(' ');
+        var spaceLine = utilW.spaceLine(10);
+        headerArray.push(spaceLine);
         headerArray.push(infoObject);
 
+        // สรุปความสูงของหัวกระดาษ
         var headerHeight = 0;
         headerHeight += headObject.cal_height;
-        headerHeight += utilW.fontHeight(font.size);
+        headerHeight += spaceLine.cal_height;
         headerHeight += infoObject.cal_height;
 
         return { stack : headerArray, cal_height : headerHeight };
     },
 
+    // ฟังก์ชั่นใช้สำหรับสร้างตาราง Order สำหรับขนาด 80m
     "orderTable_80m" : function(size, data, font)  {
         var orderTableObject = {
             table : {
@@ -724,12 +764,12 @@ var utilW = {
             },
             cal_height : 0
         };
-
+        // ใส่ข้อมูลลงกระดาษ
         data.orderList.forEach(function(order) {
             order.detail.name = utilB.charCut(order.detail.name.text, size.detail.width, font.canvasFont());
             orderTableObject.table.body.push([order.detail.name, order.quantity.amount, order.price.unit, order.price.total]);
         });
-
+        // นับความสูง
         orderTableObject.cal_height += utilW.fontHeight(font.size);
         data.orderList.forEach(function(order) {
             orderTableObject.cal_height += order.detail.name.height;
@@ -738,6 +778,7 @@ var utilW = {
         return orderTableObject;
     },
 
+    // ฟังก์ชั่นใช้สำหรับสร้างตาราง Total สำหรับกระดาษขนาด 80m
     "total_80m" : function(size, data, font) {
         var totalObject = {
             table : {
@@ -768,9 +809,12 @@ var utilW = {
         return totalObject;
     },
 
+    // ฟังก์ชั่นใช้สำหรับสร้าง Footer สำหรับกระดาษ ขนาด 80m
     "footer_80m" : function(width, data, font) {
         var footerObject = { stack : [], cal_height : 0 }
+        // แยกแต่ละคำเป็นบรรทัดด้วย \n
         data.text.split('\n').forEach(function(line) {
+            // แยกบรรทัดเป็นหลายบรรทัด ถ้าข้อความยาวเกินไป
             utilB.textToArray(line, width, font.canvasFont()).forEach(function(l) {
                 l.alignment = 'center';
                 footerObject.stack.push(l);
